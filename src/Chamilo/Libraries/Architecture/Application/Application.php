@@ -323,9 +323,7 @@ abstract class Application
 
         if ($breadcrumbTrail->size() > 0)
         {
-            $pageTitle = BreadcrumbTrail::getInstance()->get_last()->get_name();
-
-            return '<h3 id="page-title" title="' . htmlentities(strip_tags($pageTitle)) . '">' . $pageTitle . '</h3>';
+            return htmlentities(strip_tags(BreadcrumbTrail::getInstance()->get_last()->get_name()));
         }
 
         return '';
