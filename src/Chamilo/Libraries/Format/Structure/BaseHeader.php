@@ -351,32 +351,23 @@ class BaseHeader implements HeaderInterface
      * Creates the HTML output for the header.
      * This function will send all http headers to the browser and return the head-tag of the html document
      *
-     * @return string
+     * @return array
      */
     public function render()
     {
         $this->addDefaultHeaders();
 
-        $html = array();
+        $arrBaseParameters = array();
 
-        $html[] = '<!DOCTYPE html>';
-        $html[] = '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $this->getLanguageCode() . '" lang="' .
-             $this->getLanguageCode() . '">';
-        $html[] = '<head>';
+        $arrBaseParameters['BASE_LANGUAGECODE'] = $this->getLanguageCode();
 
-        $htmlHeaders = $this->getHtmlHeaders();
-        foreach ($htmlHeaders as $index => $htmlHeader)
-        {
-            $html[] = $htmlHeader;
-        }
+        $arrBaseParameters['BASE_HEADERS'] = implode(PHP_EOL, $this->getHtmlHeaders());
 
-        $html[] = '</head>';
-
-        $html[] = '<body dir="' . $this->getTextDirection() . '">';
+        $arrBaseParameters['BASE_TEXT_DIRECTION'] = $this->getTextDirection();
 
         if ($this->getViewMode() != Page::VIEW_MODE_HEADERLESS)
         {
-            $html[] = $this->getBanner()->render();
+            $arrBaseParameters['BASE_BANNER'] = $this->getBanner()->render();
         }
 
         $classes = $this->getContainerMode();
@@ -386,9 +377,9 @@ class BaseHeader implements HeaderInterface
             $classes .= ' container-headerless';
         }
 
-        $html[] = '<div class="' . $classes . '">';
+        $arrBaseParameters['BASE_VIEWMODECLASS'] = $classes;
 
-        return implode(PHP_EOL, $html);
+        return $arrBaseParameters;
     }
 
     /**

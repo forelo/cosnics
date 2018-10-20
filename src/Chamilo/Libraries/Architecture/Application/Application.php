@@ -250,48 +250,20 @@ abstract class Application
      * @param string $pageTitle
      * @return string
      */
-    public function render_header($pageTitle = '')
+    public function render_header($pageTitle = 'jjjj')
     {
-        if (! $pageTitle)
-        {
-            $pageTitle = $this->renderPageTitle();
-        }
-
-        if ($this->get_application())
-        {
-            return $this->get_application()->render_header($pageTitle);
-        }
-
-        $breadcrumbtrail = BreadcrumbTrail::getInstance();
-
         $page = Page::getInstance();
         $page->setApplication($this);
         $page->setTitle($this->getPageTitle());
 
-        $html = array();
+        $arrParameters = $page->getHeader()->toHtml();
 
-        $html[] = $page->getHeader()->toHtml();
+        //Disabled
+        //$arrParameters['APP_PAGE_TITLE'] = $this->renderPageTitle();
 
-        if ($page->isFullPage())
-        {
-            $html[] = '<div class="row">';
-
-            // If there is an application-wide menu, show it
-            if ($this->has_menu())
-            {
-                $html[] = '<div class="col-xs-12 col-md-4 col-lg-3">';
-                $html[] = $this->get_menu();
-                $html[] = '</div>';
-                $html[] = '<div class="col-xs-12 col-md-8 col-lg-9">';
-            }
-            else
-            {
-                $html[] = '<div class="col-xs-12">';
-            }
-
-            $html[] = $pageTitle;
-            $html[] = '<div class="clearfix"></div>';
-        }
+        $arrParameters['APP_FULLPAGE'] = $page->isFullPage();
+        $arrParameters['APP_HASLEFTMENU'] = $this->has_menu();
+        $arrParameters['APP_LEFTMENU'] = $this->get_menu();
 
         // Display messages
         $messages = Session::retrieve(self::PARAM_MESSAGES);
@@ -299,35 +271,35 @@ abstract class Application
         Session::unregister(self::PARAM_MESSAGES);
         if (is_array($messages))
         {
-            $html[] = $this->display_messages($messages[self::PARAM_MESSAGE], $messages[self::PARAM_MESSAGE_TYPE]);
+            $arrParameters['APP_MESSAGES'] = implode(PHP_EOL, $this->display_messages($messages[self::PARAM_MESSAGE], $messages[self::PARAM_MESSAGE_TYPE]));
         }
 
         $notificationMessageManager = new NotificationMessageManager();
-        $html[] = $notificationMessageManager->renderMessages();
+        $arrParameters['APP_NOTIFICATION_MESSAGE'] = $notificationMessageManager->renderMessages();
 
         // DEPRECATED
         // Display messages
         $message = Request::get(self::PARAM_MESSAGE);
-        $type = Request::get(self::PARAM_MESSAGE_TYPE);
 
         if ($message)
         {
-            $html[] = $this->display_message($message);
+            $arrParameters['APP_DISPLAY_MESSAGE'] = $this->display_message($message);
         }
 
         $message = Request::get(self::PARAM_ERROR_MESSAGE);
         if ($message)
         {
-            $html[] = $this->display_error_message($message);
+            $arrParameters['APP_DISPLAY_ERROR_MESSAGE'] = $this->display_error_message($message);
         }
 
         $message = Request::get(self::PARAM_WARNING_MESSAGE);
         if ($message)
         {
-            $html[] = $this->display_warning_message($message);
+            $arrParameters['APP_DISPLAY_WARNING_MESSAGE'] = $this->display_warning_message($message);
         }
 
-        return implode(PHP_EOL, $html);
+        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Header.html.twig');
+        return $template->renderBlock('header', $arrParameters);
     }
 
     /**

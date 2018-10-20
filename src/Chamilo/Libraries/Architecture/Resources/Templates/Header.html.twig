@@ -1,0 +1,28 @@
+{% set appContext = 'Chamilo\\Libraries\\Architecture\\Application' %}
+{% block header %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ BASE_LANGUAGECODE|raw }}" lang="{{ BASE_LANGUAGECODE|raw }}">
+<head>{{ BASE_HEADERS|raw }}</head>
+<body dir="{{ BASE_TEXT_DIRECTION|raw }}">
+{{ BASE_BANNER|raw }}
+<div class="{{ BASE_VIEWMODECLASS|raw }}">
+
+{% if APP_FULLPAGE %}
+<div class="row">
+    {% if APP_HASLEFTMENU %}
+    <div class="col-xs-12 col-md-4 col-lg-3">
+        {{ APP_LEFTMENU|raw }}
+    </div>
+    <div class="col-xs-12 col-md-8 col-lg-9">
+        {% else %}
+        <div class="col-xs-12">
+            {% endif %}
+            {{ APP_PAGE_TITLE|raw }}
+            <div class="clearfix"></div>
+            {% endif %}
+            {{ APP_MESSAGES|raw }}
+            {{ APP_NOTIFICATION_MESSAGE|raw }}
+            {{ APP_DISPLAY_MESSAGE|raw }}
+            {{ APP_DISPLAY_ERROR_MESSAGE|raw }}
+            {{ APP_DISPLAY_WARNING_MESSAGE|raw }}
+{% endblock %}
