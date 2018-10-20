@@ -26,3 +26,13 @@
             {{ APP_DISPLAY_ERROR_MESSAGE|raw }}
             {{ APP_DISPLAY_WARNING_MESSAGE|raw }}
 {% endblock %}
+{% block footer %}
+    {% if APP_FULLPAGE %}
+        <div class="clearfix"></div>
+        </div>
+
+        <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    {{ APP_FOOTER|raw }}
+{% endblock %}

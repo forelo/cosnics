@@ -298,7 +298,7 @@ abstract class Application
             $arrParameters['APP_DISPLAY_WARNING_MESSAGE'] = $this->display_warning_message($message);
         }
 
-        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Header.html.twig');
+        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Application.html.twig');
         return $template->renderBlock('header', $arrParameters);
     }
 
@@ -344,7 +344,7 @@ abstract class Application
 
         $arrParameters['APP_FOOTER'] = $page->getFooter()->toHtml();
 
-        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Footer.html.twig');
+        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Application.html.twig');
         return $template->renderBlock('footer', $arrParameters);
     }
 
