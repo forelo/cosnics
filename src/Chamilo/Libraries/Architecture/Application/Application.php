@@ -250,7 +250,7 @@ abstract class Application
      * @param string $pageTitle
      * @return string
      */
-    public function render_header($pageTitle = 'jjjj')
+    public function render_header($pageTitle = '')
     {
         $page = Page::getInstance();
         $page->setApplication($this);
@@ -338,27 +338,14 @@ abstract class Application
      */
     public function render_footer()
     {
-        if ($this->get_application())
-        {
-            return $this->get_application()->render_footer();
-        }
-
         $page = Page::getInstance();
 
-        $html = array();
+        $arrParameters['APP_FULLPAGE'] = $page->isFullPage();
 
-        if ($page->isFullPage())
-        {
-            $html[] = '<div class="clearfix"></div>';
-            $html[] = '</div>';
+        $arrParameters['APP_FOOTER'] = $page->getFooter()->toHtml();
 
-            $html[] = '<div class="clearfix"></div>';
-            $html[] = '</div>';
-        }
-
-        $html[] = $page->getFooter()->toHtml();
-
-        return implode(PHP_EOL, $html);
+        $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Footer.html.twig');
+        return $template->renderBlock('footer', $arrParameters);
     }
 
     /**

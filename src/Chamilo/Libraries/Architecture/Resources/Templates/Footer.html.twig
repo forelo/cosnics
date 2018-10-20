@@ -1,0 +1,11 @@
+{% set appContext = 'Chamilo\\Libraries\\Architecture\\Application' %}
+{% block footer %}
+    {% if APP_FULLPAGE %}
+        <div class="clearfix"></div>
+        </div>
+
+        <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    {{ APP_FOOTER|raw }}
+{% endblock %}
