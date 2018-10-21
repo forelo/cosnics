@@ -17,7 +17,9 @@
         {% else %}
         <div class="col-xs-12">
             {% endif %}
+            {% if APP_PAGE_TITLE %}
             <h3 id="page-title" title="{{ APP_PAGE_TITLE|raw }}">{{ APP_PAGE_TITLE|raw }}</h3>
+            {% endif %}
             <div class="clearfix"></div>
             {% endif %}
             {{ APP_MESSAGES|raw }}
