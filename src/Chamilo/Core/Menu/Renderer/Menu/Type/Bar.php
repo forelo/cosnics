@@ -27,54 +27,39 @@ class Bar extends Renderer
         {
             $class .= ' navbar-no-items';
         }
-        
-        $html[] = '<nav class="' . $class . '">';
-        $html[] = '<div class="' . $this->getContainerMode() . '">';
-        $html[] = '<div class="navbar-header">';
-        
-        $html[] = '<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-navbar-collapse" aria-expanded="false">';
-        $html[] = '<span class="sr-only">Toggle navigation</span>';
-        $html[] = '<span class="icon-bar"></span>';
-        $html[] = '<span class="icon-bar"></span>';
-        $html[] = '<span class="icon-bar"></span>';
-        $html[] = '</button>';
-        $html[] = $this->renderBrand();
-        
-        $html[] = '</div>';
-        $html[] = '<div class="collapse navbar-collapse" id="menu-navbar-collapse">';
-        $html[] = '<ul class="nav navbar-nav navbar-right">';
-        
-        return implode(PHP_EOL, $html);
+
+        $arrParameters['MENU_NAVCLASS'] = $class;
+        $arrParameters['MENU_DIVCONTAINERMODE'] = $this->getContainerMode();
+        $arrParameters = array_merge($arrParameters, $this->renderBrand());
+
+        return $arrParameters;
     }
 
     public function display_menu_footer()
     {
         $html = array();
-        
+
         $html[] = '</ul>';
         $html[] = '</div>';
         $html[] = '</div>';
         $html[] = '</nav>';
-        
+
         return implode(PHP_EOL, $html);
     }
 
     public function renderBrand()
     {
-        $siteName = Configuration::getInstance()->get_setting(array('Chamilo\Core\Admin', 'site_name'));
-        $brandImage = Configuration::getInstance()->get_setting(array('Chamilo\Core\Menu', 'brand_image'));
-        
-        if ($brandImage)
+        $arrParameters['MENU_ADMINSITENAME'] = Configuration::getInstance()->get_setting(array('Chamilo\Core\Admin', 'site_name'));
+        $arrParameters['MENU_BRANDIMAGE'] = Configuration::getInstance()->get_setting(array('Chamilo\Core\Menu', 'brand_image'));
+
+        if (!$arrParameters['MENU_BRANDIMAGE'])
         {
-            $brandSource = $brandImage;
+            $arrParameters['MENU_BRANDIMAGE'] = Theme::getInstance()->getImagePath('Chamilo\Configuration', 'LogoHeader');
         }
-        else
-        {
-            $brandSource = Theme::getInstance()->getImagePath('Chamilo\Configuration', 'LogoHeader');
-        }
-        
-        return '<a class="navbar-brand" href="' . Path::getInstance()->getBasePath(true) . '">' . '<img alt="' .
-             $siteName . '" src="' . $brandSource . '"></a>';
+
+        $arrParameters['MENU_BRANDBASEPATH'] = Path::getInstance()->getBasePath(true);
+
+        return $arrParameters;
     }
 
     /**

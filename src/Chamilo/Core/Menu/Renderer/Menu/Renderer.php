@@ -15,6 +15,9 @@ use Chamilo\Core\User\Storage\DataClass\User;
  */
 abstract class Renderer
 {
+    use \Chamilo\Libraries\Architecture\Traits\ClassContext;
+    use \Chamilo\Libraries\Architecture\Traits\DependencyInjectionContainerTrait;
+
     const TYPE_SITE_MAP = 'SiteMap';
     const TYPE_BAR = 'Bar';
 
@@ -58,6 +61,8 @@ abstract class Renderer
         $this->containerMode = $containerMode;
         $this->user = $user;
         $this->request = $request;
+
+        $this->initializeContainer();
     }
 
     /**
@@ -145,11 +150,9 @@ abstract class Renderer
         
         if (! $user instanceof User && ! $this->isMenuAvailableAnonymously())
         {
-            return;
+            return false;
         }
-        
-        $html = array();
-        
+
         $numberOfItems = 0;
         $itemRenditions = array();
         
@@ -173,12 +176,12 @@ abstract class Renderer
                 }
             }
         }
-        
-        $html[] = $this->display_menu_header($numberOfItems);
-        $html[] = implode(PHP_EOL, $itemRenditions);
-        $html[] = $this->display_menu_footer();
-        
-        return implode(PHP_EOL, $html);
+
+        $arrParameters = $this->display_menu_header($numberOfItems);
+        $arrParameters['MENU_ITEMS'] = implode(PHP_EOL, $itemRenditions);
+
+        $template = $this->getTwig()->load('Chamilo\Core\Menu:Menu.html.twig');
+        return $template->renderBlock('menu', $arrParameters);
     }
 
     /**

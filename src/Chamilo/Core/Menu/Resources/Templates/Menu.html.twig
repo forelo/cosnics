@@ -1,0 +1,22 @@
+{% set appContext = 'Chamilo\\Core\\Menu' %}
+{% block menu %}
+<nav class="{{ MENU_NAVCLASS|raw }}">
+    <div class="{{ MENU_DIVCONTAINERMODE|raw }}">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ MENU_BRANDBASEPATH }}"><img alt="{{ MENU_ADMINSITENAME }}" src="{{ MENU_BRANDIMAGE }}"></a>
+            {{ MENU_RENDERBRAND|raw }}
+        </div>
+        <div class="collapse navbar-collapse" id="menu-navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            {{ MENU_ITEMS|raw }}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
