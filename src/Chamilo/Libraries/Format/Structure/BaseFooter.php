@@ -99,14 +99,7 @@ abstract class BaseFooter implements FooterInterface
      */
     protected function getContainerHeader()
     {
-        $html = array();
-
-        $html[] = '<footer class="chamilo-footer">';
-        $html[] = '<div class="' . $this->getContainerMode() . '">';
-        $html[] = '<div class="row footer">';
-        $html[] = '<div class="col-xs-12">';
-
-        return implode(PHP_EOL, $html);
+        return $this->getContainerMode();
     }
 
     /**

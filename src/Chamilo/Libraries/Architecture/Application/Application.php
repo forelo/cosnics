@@ -333,6 +333,9 @@ abstract class Application
      * Displays the footer
      *
      * @return string
+     *
+     * @throws \Twig_Error_Loader  When the template cannot be found
+     * @throws \Throwable
      */
     public function render_footer()
     {
@@ -340,7 +343,7 @@ abstract class Application
 
         $arrParameters['APP_FULLPAGE'] = $page->isFullPage();
 
-        $arrParameters['APP_FOOTER'] = $page->getFooter()->toHtml();
+        $arrParameters = array_merge($arrParameters, $page->getFooter()->toHtml());
 
         $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Application.html.twig');
         return $template->renderBlock('footer', $arrParameters);

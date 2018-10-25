@@ -6,35 +6,55 @@
 <body dir="{{ BASE_TEXT_DIRECTION|raw }}">
 {{ BASE_BANNER|raw }}
 <div class="{{ BASE_VIEWMODECLASS|raw }}">
-
-{% if APP_FULLPAGE %}
-<div class="row">
-    {% if APP_HASLEFTMENU %}
-    <div class="col-xs-12 col-md-4 col-lg-3">
-        {{ APP_LEFTMENU|raw }}
-    </div>
-    <div class="col-xs-12 col-md-8 col-lg-9">
-        {% else %}
-        <div class="col-xs-12">
-            {% endif %}
-            {% if APP_PAGE_TITLE %}
-            <h3 id="page-title" title="{{ APP_PAGE_TITLE|raw }}">{{ APP_PAGE_TITLE|raw }}</h3>
-            {% endif %}
-            <div class="clearfix"></div>
-            {% endif %}
-            {{ APP_MESSAGES|raw }}
-            {{ APP_NOTIFICATION_MESSAGE|raw }}
-            {{ APP_DISPLAY_MESSAGE|raw }}
-            {{ APP_DISPLAY_ERROR_MESSAGE|raw }}
-            {{ APP_DISPLAY_WARNING_MESSAGE|raw }}
+    {% if APP_FULLPAGE %}
+    <div class="row">
+        {% if APP_HASLEFTMENU %}
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            {{ APP_LEFTMENU|raw }}
+        </div>
+        <div class="col-xs-12 col-md-8 col-lg-9">
+            {% else %}
+            <div class="col-xs-12">
+                {% endif %}
+                {% if APP_PAGE_TITLE %}
+                    <h3 id="page-title" title="{{ APP_PAGE_TITLE|raw }}">{{ APP_PAGE_TITLE|raw }}</h3>
+                {% endif %}
+                <div class="clearfix"></div>
+                {% endif %}
+                {{ APP_MESSAGES|raw }}
+                {{ APP_NOTIFICATION_MESSAGE|raw }}
+                {{ APP_DISPLAY_MESSAGE|raw }}
+                {{ APP_DISPLAY_ERROR_MESSAGE|raw }}
+                {{ APP_DISPLAY_WARNING_MESSAGE|raw }}
 {% endblock %}
 {% block footer %}
-    {% if APP_FULLPAGE %}
-        <div class="clearfix"></div>
+                {% if APP_FULLPAGE %}
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
         </div>
+        {% endif %}
+</div> <!-- end of .container-fluid" -->
+<footer class="chamilo-footer">
+    <div class="{{ BASEFOOTER_VIEWMODECLASS|raw }}">
+        <div class="row footer">
+            <div class="col-xs-12">
+                <a href="{{ FOOTER_INSTITUTIONURL|raw }}" target="about:blank">{{ FOOTER_INSTITUTION|raw }}</a> |
+                {% if FOOTER_MANAGERCONTACTWEBSITE %}
+                    {{ FOOTER_MANAGERCONTACTWEBSITE|raw }} |
+                {% elseif FOOTER_MANAGERPREFIX %}
+                    {{ FOOTER_MANAGERPREFIX|raw }} |
+                {% endif %}
+                {% if FOOTER_VERSION %}
+                    {{ FOOTER_VERSION|raw }} |
+                {% endif %}
+                <a href="{{ FOOTER_WHOISONLINEURL|raw }}">{{ FOOTER_WHOISONLINE|raw }}</a>
+                &copy; {{ "now"|date("Y") }}
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
 
-        <div class="clearfix"></div>
-        </div>
-    {% endif %}
-    {{ APP_FOOTER|raw }}
 {% endblock %}

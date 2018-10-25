@@ -38,21 +38,15 @@ class Footer extends BaseFooter
      */
     public function render()
     {
-        $html = array();
-
-        $html[] = $this->getHeader();
+        $arrParameters = array();
 
         if ($this->getViewMode() != Page::VIEW_MODE_HEADERLESS)
         {
-
-            $html[] = $this->getContainerHeader();
-            $html[] = implode(' | ', $this->getLinks());
-            $html[] = $this->getContainerFooter();
+            $arrParameters['BASEFOOTER_VIEWMODECLASS'] = $this->getContainerHeader();
+            $arrParameters = array_merge($arrParameters, $this->getLinks());
         }
 
-        $html[] = $this->getFooter();
-
-        return implode(PHP_EOL, $html);
+        return $arrParameters;
     }
 
     /**
@@ -76,16 +70,19 @@ class Footer extends BaseFooter
 
         $stringUtilities = StringUtilities::getInstance();
 
-        $links = array();
+        $arrParameters = array();
 
-        $links[] = '<a href="' . $institutionUrl . '" target="about:blank">' . $institution . '</a>';
+        $arrParameters['FOOTER_INSTITUTIONURL'] = $institutionUrl;
+        $arrParameters['FOOTER_INSTITUTION'] = $institution;
 
         if ($showAdministratorData == '1')
         {
             if (! empty($administratorEmail) && ! empty($administratorWebsite))
             {
                 $email = $stringUtilities->encryptMailLink($administratorEmail, $administratorName);
-                $links[] = Translation::get(
+
+                //@ToDo Split translation string in separate variables
+                $arrParameters['FOOTER_MANAGERCONTACTWEBSITE'] = Translation::get(
                     'ManagerContactWebsite',
                     array('EMAIL' => $email, 'WEBSITE' => $administratorWebsite));
             }
@@ -93,14 +90,14 @@ class Footer extends BaseFooter
             {
                 if (! empty($administratorEmail))
                 {
-                    $links[] = Translation::get('Manager') . ': ' . $stringUtilities->encryptMailLink(
+                    $arrParameters['FOOTER_MANAGERPREFIX'] = Translation::get('Manager') . ': ' . $stringUtilities->encryptMailLink(
                         $administratorEmail,
                         $administratorName);
                 }
 
                 if (! empty($administratorWebsite))
                 {
-                    $links[] = Translation::get('Support') . ': <a href="' . $administratorWebsite . '">' .
+                    $arrParameters['FOOTER_MANAGERPREFIX'] = Translation::get('Support') . ': <a href="' . $administratorWebsite . '">' .
                          $administratorName . '</a>';
                 }
             }
@@ -108,8 +105,8 @@ class Footer extends BaseFooter
 
         if ($showVersionData == '1')
         {
-            $links[] = htmlspecialchars(Translation::get('Version')) . ' ' .
-                 Configuration::get('Chamilo\Core\Admin', 'version');
+            $arrParameters['FOOTER_VERSION'] = htmlspecialchars(Translation::get('Version')) . ' ' .
+                Configuration::get('Chamilo\Core\Admin', 'version');
         }
 
         if (key_exists('_uid', $_SESSION))
@@ -128,11 +125,11 @@ class Footer extends BaseFooter
                         Application::PARAM_CONTEXT => \Chamilo\Core\Admin\Manager::context(),
                         Application::PARAM_ACTION => \Chamilo\Core\Admin\Manager::ACTION_WHOIS_ONLINE));
 
-                $links[] = '<a href="' . htmlspecialchars($redirect->getUrl()) . '">' . Translation::get('WhoisOnline') .
-                     '?</a>';
+                $arrParameters['FOOTER_WHOISONLINEURL'] = htmlspecialchars($redirect->getUrl());
+                $arrParameters['FOOTER_WHOISONLINE'] = Translation::get('WhoisOnline');
             }
         }
 
-        return $links;
+        return $arrParameters;
     }
 }
