@@ -248,19 +248,19 @@ abstract class Manager extends Application
         $html[] = '<div class="col-md-9">';
         $html[] = parent::renderPageTitle();
         $html[] = '</div>';
+        $html[] = '</div>';
 
+        return implode(PHP_EOL, $html);
+    }
+
+    public function renderShortcutMenu()
+    {
         if (Page::getInstance()->isFullPage())
         {
             $visible_tools = $this->get_visible_tools();
 
-            $html[] = '<div class="col-md-3">';
-            $html[] = $this->display_course_menus($visible_tools, false);
-            $html[] = '</div>';
+            return $this->display_course_menus($visible_tools, false);
         }
-
-        $html[] = '</div>';
-
-        return implode(PHP_EOL, $html);
     }
 
     /**

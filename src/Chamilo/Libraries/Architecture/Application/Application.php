@@ -261,6 +261,8 @@ abstract class Application
         //Disabled
         //$arrParameters['APP_PAGE_TITLE'] = $this->renderPageTitle();
 
+        $arrParameters['APP_SHORTCUT_MENU'] = $this->renderShortcutMenu();
+
         $arrParameters['APP_FULLPAGE'] = $page->isFullPage();
         $arrParameters['APP_HASLEFTMENU'] = $this->has_menu();
         $arrParameters['APP_LEFTMENU'] = $this->get_menu();
@@ -300,6 +302,15 @@ abstract class Application
 
         $template = $this->getTwig()->load('Chamilo\Libraries\Architecture:Application.html.twig');
         return $template->renderBlock('header', $arrParameters);
+    }
+
+    /**
+     * Obligatory render shortcut menu
+     * @return string|null
+     */
+    protected function renderShortcutMenu()
+    {
+        return null;
     }
 
     /**
