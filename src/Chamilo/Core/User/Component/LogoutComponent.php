@@ -2,7 +2,6 @@
 namespace Chamilo\Core\User\Component;
 
 use Chamilo\Core\User\Manager;
-use Chamilo\Libraries\Authentication\AuthenticationValidator;
 
 /**
  *
@@ -18,9 +17,7 @@ class LogoutComponent extends Manager
     public function run()
     {
         // $this->checkAuthorization(Manager::context(), 'Logout');
-        $authenticationHandler = new AuthenticationValidator(
-            $this->getRequest(), 
-            $this->getService('chamilo.configuration.service.configuration_consulter'));
+        $authenticationHandler = $this->getAuthenticationValidator();
         $authenticationHandler->logout($this->getUser());
         exit();
     }

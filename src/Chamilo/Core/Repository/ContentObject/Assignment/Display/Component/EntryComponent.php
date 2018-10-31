@@ -9,14 +9,12 @@ use Chamilo\Core\Repository\ContentObject\Assignment\Display\Form\ScoreFormType;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\FormHandler\SetScoreFormHandler;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\Manager;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\Service\EntryNavigator;
-use Chamilo\Core\Repository\ContentObject\Assignment\Display\Service\ScoreFormProcessor;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\Service\ScoreService;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\Storage\DataClass\Entry;
 use Chamilo\Core\Repository\ContentObject\Assignment\Display\Storage\DataClass\Score;
 use Chamilo\Core\Repository\Storage\DataClass\ContentObject;
 use Chamilo\Libraries\Architecture\Application\ApplicationConfiguration;
 use Chamilo\Libraries\Architecture\Application\ApplicationConfigurationInterface;
-use Chamilo\Libraries\Architecture\Exceptions\NoObjectSelectedException;
 use Chamilo\Libraries\Architecture\Exceptions\NotAllowedException;
 use Chamilo\Libraries\Format\Structure\ActionBar\Button;
 use Chamilo\Libraries\Format\Structure\ActionBar\ButtonGroup;
@@ -30,13 +28,7 @@ use Chamilo\Libraries\Format\Structure\BreadcrumbTrail;
 use Chamilo\Libraries\Format\Structure\Glyph\FontAwesomeGlyph;
 use Chamilo\Libraries\Format\Structure\ToolbarItem;
 use Chamilo\Libraries\Format\Table\Interfaces\TableSupport;
-use Chamilo\Libraries\Format\Theme;
-use Chamilo\Libraries\Storage\Cache\DataClassRepositoryCache;
-use Chamilo\Libraries\Storage\Cache\DataClassResultCache;
 use Chamilo\Libraries\Storage\DataClass\DataClass;
-use Chamilo\Libraries\Storage\Parameters\DataClassRetrievesParameters;
-use Chamilo\Libraries\Storage\Query\Condition\InCondition;
-use Chamilo\Libraries\Storage\Query\Variable\PropertyConditionVariable;
 use Chamilo\Libraries\Translation\Translation;
 use Chamilo\Libraries\Utilities\DatetimeUtilities;
 use Chamilo\Libraries\Utilities\Utilities;
@@ -622,7 +614,7 @@ class EntryComponent extends Manager implements \Chamilo\Core\Repository\Feedbac
 
             $entityNavigatorActions->addButton(
                 new Button(
-                    '<span class="badge" style="color: white; background-color: #5bc0de;">'
+                    '<span class="badge" style="color: white; background-color: #5bc0de; height: 19px; top: 0;">'
                     . $currentEntityPosition . ' / ' . $entitiesCount . '</span>',
                     null,
                     '#',
@@ -698,7 +690,7 @@ class EntryComponent extends Manager implements \Chamilo\Core\Repository\Feedbac
 
             $entriesNavigatorActions->addButton(
                 new Button(
-                    '<span class="badge" style="color: white; background-color: #28a745;">'
+                    '<span class="badge" style="color: white; background-color: #28a745; height: 19px; top: 0;">'
                     . $currentEntryPosition . ' / ' . $entriesCount . '</span>',
                     null,
                     '#',
