@@ -1,0 +1,38 @@
+{% set appContext = 'Chamilo\\Libraries' %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ BASE_LANGUAGECODE|raw }}" lang="{{ BASE_LANGUAGECODE|raw }}">
+<head>{{ BASE_HEADERS|raw }}</head>
+<body dir="{{ BASE_TEXT_DIRECTION|raw }}">
+{{ BASE_BANNER|raw }}
+<div class="{{ BASE_VIEWMODECLASS|raw }}">
+
+    <div class="panel panel-danger panel-not-authenticated">
+        <div class="panel-heading">
+            {{ 'NotAuthenticated'|trans({}, appContext) }}
+        </div>
+        <div class="panel-body">
+            {{ LOGINFORM|raw }}
+        </div>
+    </div>
+
+</div> <!-- end of .container-fluid" -->
+<footer class="chamilo-footer">
+    <div class="{{ BASEFOOTER_VIEWMODECLASS|raw }}">
+        <div class="row footer">
+            <div class="col-xs-12">
+                <a href="{{ FOOTER_INSTITUTIONURL|raw }}" target="about:blank">{{ FOOTER_INSTITUTION|raw }}</a> |
+                {% if FOOTER_MANAGERCONTACTWEBSITE %}
+                    {{ FOOTER_MANAGERCONTACTWEBSITE|raw }} |
+                {% elseif FOOTER_MANAGERPREFIX %}
+                    {{ FOOTER_MANAGERPREFIX|raw }} |
+                {% endif %}
+                {% if FOOTER_VERSION %}
+                    {{ FOOTER_VERSION|raw }} |
+                {% endif %}
+                &copy; {{ "now"|date("Y") }}
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

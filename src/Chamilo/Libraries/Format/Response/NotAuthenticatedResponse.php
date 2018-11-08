@@ -16,40 +16,27 @@ use Chamilo\Libraries\Utilities\Utilities;
  */
 class NotAuthenticatedResponse extends Response
 {
+    use \Chamilo\Libraries\Architecture\Traits\ClassContext;
+    use \Chamilo\Libraries\Architecture\Traits\DependencyInjectionContainerTrait;
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->initializeContainer();
+
         $page = Page::getInstance();
 
-        $html = array();
-        $html[] = $page->getHeader()->toHtml();
-        $html[] = $this->renderPanel();
-        $html[] = $page->getFooter()->toHtml();
+        $arrParameters = array();
+        $arrParameters = array_merge($arrParameters, $page->getHeader()->toHtml());
+        $arrParameters['LOGINFORM'] = $this->displayLoginForm();
+        $arrParameters = array_merge($arrParameters, $page->getFooter()->toHtml());
+
+        $html[] = $this->getTwig()->render(
+            'Chamilo\Libraries:NotAuthenticatedResponse.html.twig', $arrParameters);
 
         parent::__construct('', implode(PHP_EOL, $html));
-    }
-
-    /**
-     * Renders the panel with the not authenticated message and the login form
-     *
-     * @return string
-     */
-    public function renderPanel()
-    {
-        $html = array();
-
-        $html[] = '<div class="panel panel-danger panel-not-authenticated">';
-        $html[] = '<div class="panel-heading">';
-        $html[] = Translation::getInstance()->getTranslation('NotAuthenticated', array(), Utilities::COMMON_LIBRARIES);
-        $html[] = '</div>';
-        $html[] = '<div class="panel-body">';
-        $html[] = $this->displayLoginForm();
-        $html[] = '</div>';
-
-        return implode(PHP_EOL, $html);
     }
 
     /**
