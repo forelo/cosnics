@@ -1,0 +1,38 @@
+{% set appContext = 'Chamilo\\Core\\Install' %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ BASE_LANGUAGECODE|raw }}"
+      lang="{{ BASE_LANGUAGECODE|raw }}">
+<head>{{ BASE_HEADERS|raw }}</head>
+<body dir="{{ BASE_TEXT_DIRECTION|raw }}">
+{{ BASE_BANNER|raw }}
+<div class="{{ BASE_VIEWMODECLASS|raw }}">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="container-install-wizard">
+                {# ToDo: For each #}
+                {{ WIZARDHEADER|raw }}
+            </div>
+
+            {# end header #}
+
+            <form class="form">
+                <textarea class="form-control" cols="80" rows="30">
+                    {{ LICENSEFILE|raw }}
+             </textarea>
+            </form>
+            <br/>
+            {{ WIZARDBUTTONS|raw }}
+
+            {# start footer #}
+
+        </div>
+    </div>
+    <footer>
+        <div>
+            <hr/>
+            Cosnics&nbsp;&copy;&nbsp;2018
+        </div>
+    </footer>
+</div>
+</body>
+</html>

@@ -109,20 +109,15 @@ abstract class Manager extends Application implements NoContextComponent
         $page->setContainerMode('container');
         $page->setTitle(Translation::get('ChamiloInstallationTitle'));
 
-        $html = array();
+        $arrParameters = array();
 
-        $html[] = $page->getHeader()->toHtml();
+        $arrParameters = array_merge($arrParameters, $page->getHeader()->toHtml());
 
-        $html[] = '<div class="row">';
-        $html[] = '<div class="col-xs-12">';
+        $arrParameters['WIZARDHEADER'] = $this->renderWizardHeader();
 
-        $html[] = $this->renderWizardHeader();
+        $arrParameters['PHPVERSION'] = $this->getInfo();
 
-        $html[] = '<div class="alert alert-info">';
-        $html[] = $this->getInfo();
-        $html[] = '</div>';
-
-        return implode(PHP_EOL, $html);
+        return $arrParameters;
     }
 
     /**
@@ -142,8 +137,6 @@ abstract class Manager extends Application implements NoContextComponent
     {
         $html = array();
 
-        $html[] = '</div>';
-        $html[] = '</div>';
         $html[] = $this->getPage()->getFooter()->toHtml();
 
         return implode(PHP_EOL, $html);
@@ -187,9 +180,7 @@ abstract class Manager extends Application implements NoContextComponent
 
         $html = array();
 
-        $html[] = '<div class="container-install-wizard">';
         $html[] = $wizardHeaderRenderer->render();
-        $html[] = '</div>';
 
         return implode(PHP_EOL, $html);
     }

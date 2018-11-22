@@ -28,22 +28,11 @@ class LicenseComponent extends Manager implements NoAuthenticationSupport
     {
         $this->checkInstallationAllowed();
 
-        $html = array();
+        $arrParameters = $this->render_header();
+        $arrParameters['LICENSEFILE'] = implode("", file(realpath(__DIR__ . '/../../../../../LICENSE')));
+        $arrParameters['WIZARDBUTTONS'] = $this->getButtons();
 
-        $html[] = $this->render_header();
-
-        $html[] = '<form class="form">';
-        $html[] = '<textarea class="form-control" cols="80" rows="30">' .
-             implode("", file(realpath(__DIR__ . '/../../../../../LICENSE'))) . '</textarea>';
-        $html[] = '</form>';
-
-        $html[] = '<br />';
-
-        $html[] = $this->getButtons();
-
-        $html[] = $this->render_footer();
-
-        return implode(PHP_EOL, $html);
+        return $this->getTwig()->render('Chamilo\Core\Install:License.html.twig', $arrParameters);
     }
 
     /**

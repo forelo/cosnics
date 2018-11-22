@@ -40,14 +40,11 @@ class RequirementsComponent extends Manager implements NoAuthenticationSupport
 
         $table = new SimpleTable($this->get_data(), new DiagnoserCellRenderer(), null, 'diagnoser');
 
-        $html = array();
+        $arrParameters = $this->render_header();
+        $arrParameters['REQUIREMENTSTABLE'] = $table->toHtml();
+        $arrParameters['WIZARDBUTTONS'] = $this->getButtons();
 
-        $html[] = $this->render_header();
-        $html[] = $table->toHtml();
-        $html[] = $this->getButtons();
-        $html[] = $this->render_footer();
-
-        return implode(PHP_EOL, $html);
+        return $this->getTwig()->render('Chamilo\Core\Install:Requirements.html.twig', $arrParameters);
     }
 
     public function getButtons()
@@ -126,7 +123,7 @@ class RequirementsComponent extends Manager implements NoAuthenticationSupport
                     Utilities::COMMON_LIBRARIES));
 
         $version = phpversion();
-        $status = $version > '5.3' ? Diagnoser::STATUS_OK : Diagnoser::STATUS_ERROR;
+        $status = $version > '7.1' ? Diagnoser::STATUS_OK : Diagnoser::STATUS_ERROR;
 
         if ($status == Diagnoser::STATUS_ERROR)
         {
@@ -139,7 +136,7 @@ class RequirementsComponent extends Manager implements NoAuthenticationSupport
             'phpversion()',
             'http://www.php.net/manual/en/function.phpversion.php',
             phpversion(),
-            '>= 5.4',
+            '>= 7.1',
             null,
             Translation::get('PHPVersionInfo', null, Utilities::COMMON_LIBRARIES));
 

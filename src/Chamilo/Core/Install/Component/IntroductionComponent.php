@@ -30,11 +30,9 @@ class IntroductionComponent extends Manager implements NoAuthenticationSupport
 
         $phpVersion = phpversion();
 
-        $html = array();
+        $arrParameters = $this->render_header();
 
-        $html[] = $this->render_header();
-
-        if ($phpVersion >= 5.4)
+        if ($phpVersion >= 7.1)
         {
             $buttonToolBar = new ButtonToolBar();
 
@@ -65,41 +63,15 @@ class IntroductionComponent extends Manager implements NoAuthenticationSupport
 
             $buttonToolbarRenderer = new ButtonToolBarRenderer($buttonToolBar);
 
-            $html[] = $buttonToolbarRenderer->render();
+            $arrParameters['WIZARDBUTTONS'] = $buttonToolbarRenderer->render();
         }
 
-        $html[] = $this->render_footer();
-
-        return implode(PHP_EOL, $html);
+        //return implode(PHP_EOL, $html);
+        return $this->getTwig()->render('Chamilo\Core\Install:Introduction.html.twig', $arrParameters);
     }
 
     protected function getInfo()
     {
-        $phpVersion = phpversion();
-
-        $html = array();
-
-        if ($phpVersion >= 5.4)
-        {
-            $html[] = 'From the looks of it, Cosnics is currently not installed on your system.';
-            $html[] = '<br />';
-            $html[] = '<br />';
-            $html[] = 'Please check your database and/or configuration files if you are certain the platform was installed correctly.';
-            $html[] = '<br />';
-            $html[] = '<br />';
-            $html[] = 'If you\'re starting Cosnics for the first time, you may want to install the platform first by clicking the button below. Alternatively, you can read the installation guide, visit chamilo.org for more information or go to the community forum if you need support.';
-        }
-        else
-        {
-            $html[] = '<div class="error-message" style="margin-bottom: 39px; margin-top: 30px;">';
-            $html[] = 'Your version of PHP is not recent enough to use the Cosnics software.';
-            $html[] = '<br />';
-            $html[] = '<a href="http://www.php.net">';
-            $html[] = 'Please upgrade to PHP version 5.4 or higher';
-            $html[] = '</a>';
-            $html[] = '</div>';
-        }
-
-        return implode(PHP_EOL, $html);
+        return phpversion();
     }
 }

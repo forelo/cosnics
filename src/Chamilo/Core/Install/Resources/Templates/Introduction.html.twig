@@ -1,0 +1,51 @@
+{% set appContext = 'Chamilo\\Core\\Install' %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ BASE_LANGUAGECODE|raw }}"
+      lang="{{ BASE_LANGUAGECODE|raw }}">
+<head>{{ BASE_HEADERS|raw }}</head>
+<body dir="{{ BASE_TEXT_DIRECTION|raw }}">
+{{ BASE_BANNER|raw }}
+<div class="{{ BASE_VIEWMODECLASS|raw }}">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="container-install-wizard">
+                {# ToDo: For each #}
+                {{ WIZARDHEADER|raw }}
+            </div>
+
+            {# end header #}
+
+            <div class="alert alert-info">
+                {% if PHPVERSION >= 7.1 %}
+                    From the looks of it, Cosnics is currently not installed on your system.
+                    <br/>
+                    <br/>
+                    Please check your database and/or configuration files if you are certain the platform was installed correctly.
+                    <br/>
+                    <br/>
+                    If you're starting Cosnics for the first time, you may want to install the platform first by clicking the button below. Alternatively, you can read the installation guide, visit chamilo.org for more information or go to the community forum if you need support.
+                {% else %}
+                    <div class="error-message" style="margin-bottom: 39px; margin-top: 30px;">
+                        Your version of PHP is not recent enough to use the Cosnics software.
+                        <br/>
+                        <a href="http://www.php.net">
+                            Please upgrade to PHP version 7.1 or higher
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            {{ WIZARDBUTTONS|raw }}
+
+            {# start footer #}
+
+        </div>
+    </div>
+    <footer>
+        <div>
+            <hr/>
+            Cosnics&nbsp;&copy;&nbsp;2018
+        </div>
+    </footer>
+</div>
+</body>
+</html>
