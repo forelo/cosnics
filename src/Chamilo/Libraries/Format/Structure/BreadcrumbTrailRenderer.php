@@ -58,7 +58,7 @@ class BreadcrumbTrailRenderer
 
         $html = array();
 
-        $html[] = '<div class="container-breadcrumb">';
+        $html[] = '<div class="container-breadcrumb" style="margin-left: 100px;">';
         $html[] = '<div class="' . $breadcrumbTrail->getContainerMode() . '">';
         $html[] = $this->renderBreadcrumbs($breadcrumbTrail);
         $html[] = '</div>';
