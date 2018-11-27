@@ -51,52 +51,48 @@ class ApplicationItem extends Bar
      */
     public function getContent()
     {
+        $arrParameters = array();
+
         $url = $this->getApplicationItemURL();
+        $arrParameters['URL'] = $url;
         
         $html = array();
+
         
         if ($this->getItem()->get_use_translation())
         {
-            $title = Translation::get('TypeName', null, $this->getItem()->get_application());
+            $arrParameters['TITLE'] = Translation::get('TypeName', null, $this->getItem()->get_application());
         }
         else
         {
-            $title = $this->getItem()->get_titles()->get_translation(Translation::getInstance()->getLanguageIsocode());
+            $arrParameters['TITLE'] = $this->getItem()->get_titles()->get_translation(Translation::getInstance()->getLanguageIsocode());
         }
-        
-        $html[] = '<a href="' . $url . '">';
         
         if ($this->getItem()->show_icon())
         {
             if(!empty($this->getItem()->getIconClass()))
             {
-                $html[]= $this->renderCssIcon();
+                $arrParameters = array_merge($arrParameters, $this->renderCssIcon());
             }
             else
             {
                 $integrationNamespace = $this->getItem()->get_application() . '\Integration\Chamilo\Core\Menu';
-                $imagePath = Theme::getInstance()->getImagePath(
+                $arrParameters['IMAGE'] = Theme::getInstance()->getImagePath(
                     $integrationNamespace,
                     'Menu' . ($this->isSelected() ? 'Selected' : '')
                 );
-
-                $html[] = '<img class="chamilo-menu-item-icon' .
-                    ($this->getItem()->show_title() ? ' chamilo-menu-item-image-with-label' : '') . '" src="' .
-                    $imagePath .
-                    '" title="' . htmlentities($title) . '" alt="' . $title . '" />';
             }
         }
 
         if ($this->getItem()->show_title())
         {
-            $html[] = '<div class="chamilo-menu-item-label' .
-                 ($this->getItem()->show_icon() ? ' chamilo-menu-item-label-with-image' : '') . '">' . $title . '</div>';
+            $arrParameters['LABEL'] = $this->getItem()->show_icon();
         }
-        
-        $html[] = '<div class="clearfix"></div>';
-        $html[] = '</a>';
-        
-        return implode(PHP_EOL, $html);
+
+        $arrParameters['SELECTED'] = $this->isSelected();
+
+        $template = $this->getTwig()->load('Chamilo\Core\Menu:ApplicationItem.html.twig');
+        return $template->renderBlock('Application', $arrParameters);
     }
 
     /**
