@@ -1,13 +1,10 @@
-{% block Application %}
-    <li {% if SELECTED %} class="active" {% endif %}>
+{% block RepositoryImplementationCategoryItem %}
+    <li class="dropdown {% if SELECTED %} active {% endif %}">
 
-        <a href="{{ URL }}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false">
             {#  #}
-            {% if ICONCLASS %}
-                <div class="chamilo-menu-item-css-icon {% if TITLE %} chamilo-menu-item-image-with-label' {% endif %}">
-                    <span class="chamilo-menu-item-css-icon-class {{ ICONCLASS }}"></span>
-                </div>
-            {% else %}
+            {% if IMAGE %}
                 <img class="chamilo-menu-item-icon chamilo-menu-item-image-with-label"
                      src="{{ IMAGE|raw }}" title="{{ TITLE }}" alt="{{ TITLE }}"/>
             {% endif %}
@@ -18,7 +15,7 @@
             <div class="clearfix"></div>
         </a>
 
-        {# @ToDo: UL #}
+        {{ REPOSITORYSUBMENU|raw }}
 
     </li>
 {% endblock %}

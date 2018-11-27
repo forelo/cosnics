@@ -50,14 +50,9 @@ abstract class Bar extends Renderer
         }
         
         $html = array();
-        
-        $selected = $this->isItemSelected();
-        
-        $html[] = '<li' . ($selected ? ' class="active"' : '') . '>';
+
         $html[] = $this->getContent();
-        
-        $html[] = '</li>';
-        
+
         return implode(PHP_EOL, $html);
     }
 }
