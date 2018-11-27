@@ -1,0 +1,48 @@
+{% block WidgetItem %}
+
+    <li class="dropdown chamilo-account-menu-item">
+        <a href="{{ ACCOUNTURL }}" class="dropdown-toggle"
+           data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img class="chamilo-menu-item-icon chamilo-menu-item-icon-account"
+                 src="{{ PROFILEPICTUREURL }}"
+                 title="{{ TITLE }}" alt="{{ TITLE }}"/>
+            <div class="clearfix"></div>
+        </a>
+
+        <ul class="dropdown-menu">
+            <li>
+                <div class="chamilo-menu-item-account">
+                    <div class="chamilo-menu-item-account-photo">
+                        <div class="chamilo-menu-item-account-photo-base">
+                            <img src="{{ PROFILEPICTUREURL }}"/>
+                            <div class="chamilo-menu-item-account-photo-edit">
+                                <a href="{{ USERPICTUREURL }}">
+                                    {{ USEREDITPROFILE }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chamilo-menu-item-account-data">
+                        <span class="chamilo-menu-item-account-data-name">{{ USERFULLNAME }}</span>
+                        <span class="chamilo-menu-item-account-data-email">{{ USEREMAIL }}</span>
+                        <span class="chamilo-menu-item-account-data-my-account">
+                            <a href="{{ ACCOUNTURL }}">
+                                {{ ACCOUNT }}</a> -
+                            <a href="{{ SETTINGSURL }}">
+                                {{ SETTINGS }}</a>
+                        </span>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="chamilo-menu-item-account-logout">
+                        <a href="{{ LOGOUTURL }}">
+                            <img src="{{ LOGOUTIMAGE }}"/>
+                            {{ LOGOUT }}
+                        </a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </li>
+        </ul>
+    </li>
+
+{% endblock %}
