@@ -35,7 +35,6 @@ class RepositoryImplementationCategoryItem extends CategoryItem
 
         $arrParameters = array();
 
-        $html = array();
         $sub_html = array();
         $instances = \Chamilo\Core\Repository\Instance\Storage\DataManager::retrieves(
             Instance::class_name(), 
@@ -91,8 +90,6 @@ class RepositoryImplementationCategoryItem extends CategoryItem
         }
 
         $arrParameters['REPOSITORYSUBMENU'] = implode(PHP_EOL, $sub_html);
-        
-        //return implode(PHP_EOL, $html);
 
         $template = $this->getTwig()->load('Chamilo\Core\Menu:RepositoryImplementationCategoryItem.html.twig');
         return $template->renderBlock('RepositoryImplementationCategoryItem', $arrParameters);
