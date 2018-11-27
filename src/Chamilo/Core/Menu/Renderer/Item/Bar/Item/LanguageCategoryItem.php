@@ -36,9 +36,16 @@ class LanguageCategoryItem extends CategoryItem
             $currentUrl = $redirect->getCurrentUrl();
 
             foreach ($languages as $isocode => $language) {
+                $redirect = new Redirect(
+                    array(
+                        Application::PARAM_CONTEXT => \Chamilo\Core\User\Manager::context(),
+                        Application::PARAM_ACTION => \Chamilo\Core\User\Manager::ACTION_QUICK_LANG,
+                        \Chamilo\Core\User\Manager::PARAM_CHOICE => $isocode,
+                        \Chamilo\Core\User\Manager::PARAM_REFER => $currentUrl));
+
                 $languageItem = new \Chamilo\Core\Menu\Storage\DataClass\LanguageItem();
                 $languageItem->set_language($isocode);
-                $languageItem->setCurrentUrl($currentUrl);
+                $languageItem->setCurrentUrl($redirect->getUrl());
                 $languageItem->set_parent($this->getItem()->get_id());
 
                 if ($currentLanguage != $isocode) {
