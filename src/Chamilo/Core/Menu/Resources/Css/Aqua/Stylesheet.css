@@ -4,9 +4,10 @@
 .navbar.navbar-chamilo {
 	border-radius: 0;
 	width: 100px;
-	background-color: #406e8e;
+	background-color: #1c8e16;
 	border: none;
 	margin-bottom: 0;
+	min-height: 100%;
 }
 
 .navbar.navbar-chamilo.navbar-no-items .navbar-brand {
@@ -14,7 +15,7 @@
 }
 
 .navbar.navbar-chamilo .container-fluid {
-	background-color: #406e8e;
+	background-color: #1c8e16;
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -33,6 +34,7 @@
 	{
 	margin-left: 0;
 	margin-right: 0;
+	height: 75px;
 }
 
 .navbar-chamilo .navbar-toggle .icon-bar {
