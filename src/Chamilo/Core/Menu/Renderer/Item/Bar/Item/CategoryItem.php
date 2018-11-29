@@ -58,15 +58,12 @@ class CategoryItem extends Bar
 
     public function render()
     {
-        $html = array();
-        
-        $sub_html = array();
-        $selected = $this->isSelected();
+        $arrParameters = array();
+
+        $arrParameters['SELECTED'] = $this->isSelected();
         
         if ($this->getItem()->has_children())
         {
-            $sub_html[] = '<ul class="dropdown-menu">';
-            
             $entities = array();
             $entities[] = new UserEntity();
             $entities[] = new PlatformGroupEntity();
@@ -83,52 +80,36 @@ class CategoryItem extends Bar
                 {
                     if (! $child->is_hidden())
                     {
-                        $sub_html[] = $this->getItemRenderer($this->getMenuRenderer(), $child, $this)->render();
+                        $arrParameters['SUBMENU'][] = $this->getItemRenderer($this->getMenuRenderer(), $child, $this)->render();
                     }
                 }
             }
-            
-            $sub_html[] = '</ul>';
         }
-        
-        $title = $this->getItem()->get_titles()->get_translation(Translation::getInstance()->getLanguageIsocode());
-        
-        $html[] = '<li class="dropdown' . ($selected ? ' active' : '') . '">';
-        $html[] = '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+
+        $arrParameters['TITLE'] = $this->getItem()->get_titles()->get_translation(Translation::getInstance()->getLanguageIsocode());
         
         if ($this->getItem()->show_icon())
         {
             if(!empty($this->getItem()->getIconClass()))
             {
-                $html[]= $this->renderCssIcon();
+                $arrParameters['ICONCLASS'] = $this->renderCssIcon();
             }
             else
             {
-                $imagePath = Theme::getInstance()->getImagePath(
+                $arrParameters['IMAGE'] = Theme::getInstance()->getImagePath(
                     Manager::context(),
-                    'Menu/Folder' . ($selected ? 'Selected' : '')
+                    'Menu/Folder' . ($arrParameters['SELECTED'] ? 'Selected' : '')
                 );
-
-                $html[] = '<img class="chamilo-menu-item-icon' .
-                    ($this->getItem()->show_title() ? ' chamilo-menu-item-image-with-label' : '') . '" src="' .
-                    $imagePath .
-                    '" title="' . htmlentities($title) . '" alt="' . $title . '" />';
             }
         }
-        
+
         if ($this->getItem()->show_title())
         {
-            $html[] = '<div class="chamilo-menu-item-label' .
-                 ($this->getItem()->show_icon() ? ' chamilo-menu-item-label-with-image' : '') . '">' . $title . '</div>';
+            $arrParameters['LABEL'] = $this->getItem()->show_icon();
         }
-        
-        $html[] = '<div class="clearfix"></div>';
-        $html[] = '</a>';
-        $html[] = implode(PHP_EOL, $sub_html);
-        
-        $html[] = '</li>';
-        
-        return implode(PHP_EOL, $html);
+
+        $template = $this->getTwig()->load('Chamilo\Core\Menu:CategoryItem.html.twig');
+        return $template->renderBlock('CategoryItem', $arrParameters);
     }
 
     /**

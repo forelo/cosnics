@@ -1,8 +1,9 @@
-{% block Application %}
-    <li {% if SELECTED %} class="active" {% endif %}>
+{% block CategoryItem %}
+    <li class="dropdown {% if SELECTED %} active {% endif %}">
 
-        <a href="{{ URL }}">
-            {#  #}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false">
+
             {% if ICONCLASS %}
                 <div class="chamilo-menu-item-css-icon {% if TITLE %} chamilo-menu-item-image-with-label' {% endif %}">
                     <span class="chamilo-menu-item-css-icon-class {{ ICONCLASS }}">{{ TITLE }}</span>
@@ -18,7 +19,16 @@
             <div class="clearfix"></div>
         </a>
 
-        {# @ToDo: UL #}
+        {% if SUBMENU %}
+        <ul class="dropdown-menu">
+            {% for SUB in SUBMENU %}
+            <li>
+                {{ SUB|raw }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
     </li>
+
 {% endblock %}
