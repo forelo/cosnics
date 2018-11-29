@@ -166,20 +166,6 @@ class Banner
             $request,
             $user);
 
-        if ($this->getApplication() instanceof Application && $this->getApplication()->getUser() instanceof User)
-        {
-            if ($this->getViewMode() == Page::VIEW_MODE_FULL)
-            {
-                $breadcrumbtrail = BreadcrumbTrail::getInstance();
-                $breadcrumbtrail->setContainerMode($this->getContainerMode());
-
-                if ($breadcrumbtrail->size() > 0)
-                {
-                    $html[] = $breadcrumbtrail->render();
-                }
-            }
-        }
-
         return implode(PHP_EOL, $html);
     }
 }

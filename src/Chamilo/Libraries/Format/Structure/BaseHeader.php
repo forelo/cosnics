@@ -369,6 +369,17 @@ class BaseHeader implements HeaderInterface
             $arrBaseParameters['BASE_BANNER'] = $this->getBanner()->render();
         }
 
+        if ($this->getViewMode() == Page::VIEW_MODE_FULL)
+        {
+            $breadcrumbtrail = BreadcrumbTrail::getInstance();
+            $breadcrumbtrail->setContainerMode($this->getContainerMode());
+
+            if ($breadcrumbtrail->size() > 0)
+            {
+                $arrBaseParameters['BREADCRUMB'] = $breadcrumbtrail->render();
+            }
+        }
+
         $classes = $this->getContainerMode();
 
         if ($this->getViewMode() == Page::VIEW_MODE_HEADERLESS)
