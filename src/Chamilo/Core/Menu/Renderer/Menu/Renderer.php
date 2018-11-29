@@ -155,6 +155,7 @@ abstract class Renderer
 
         $numberOfItems = 0;
         $itemRenditions = array();
+        $arrParameters = array();
         
         if ($user)
         {
@@ -177,7 +178,7 @@ abstract class Renderer
             }
         }
 
-        $arrParameters = $this->display_menu_header($numberOfItems);
+        $arrParameters = array_merge($arrParameters, $this->display_menu_header($numberOfItems));
         $arrParameters['MENU_ITEMS'] = implode(PHP_EOL, $itemRenditions);
 
         $template = $this->getTwig()->load('Chamilo\Core\Menu:Menu.html.twig');

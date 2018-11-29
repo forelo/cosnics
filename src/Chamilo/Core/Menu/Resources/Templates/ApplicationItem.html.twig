@@ -1,0 +1,24 @@
+{% block Application %}
+    <li {% if SELECTED %} class="active" {% endif %}>
+
+        <a href="{{ URL }}">
+            {#  #}
+            {% if ICONCLASS %}
+                <div class="chamilo-menu-item-css-icon {% if TITLE %} chamilo-menu-item-image-with-label' {% endif %}">
+                    <span class="chamilo-menu-item-css-icon-class {{ ICONCLASS }}"></span>
+                </div>
+            {% else %}
+                <img class="chamilo-menu-item-icon chamilo-menu-item-image-with-label"
+                     src="{{ IMAGE|raw }}" title="{{ TITLE }}" alt="{{ TITLE }}"/>
+            {% endif %}
+
+            {% if LABEL %}
+                <div class="chamilo-menu-item-label chamilo-menu-item-label-with-image">{{ TITLE }}</div>
+            {% endif %}
+            <div class="clearfix"></div>
+        </a>
+
+        {# @ToDo: UL #}
+
+    </li>
+{% endblock %}

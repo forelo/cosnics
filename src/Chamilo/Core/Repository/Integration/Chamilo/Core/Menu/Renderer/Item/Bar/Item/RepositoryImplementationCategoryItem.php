@@ -32,8 +32,9 @@ class RepositoryImplementationCategoryItem extends CategoryItem
         {
             return '';
         }
-        
-        $html = array();
+
+        $arrParameters = array();
+
         $sub_html = array();
         $instances = \Chamilo\Core\Repository\Instance\Storage\DataManager::retrieves(
             Instance::class_name(), 
@@ -72,37 +73,26 @@ class RepositoryImplementationCategoryItem extends CategoryItem
             $sub_html[] = '</ul>';
         }
         
-        $selected = $this->isItemSelected();
-        
-        $html[] = '<li class="dropdown' . ($selected ? ' active' : '') . '">';
-        $html[] = '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
-        
-        $title = Translation::get('Instance', null, 'Chamilo\Core\Repository\Integration\Chamilo\Core\Menu');
+        $arrParameters['SELECTED'] = $this->isItemSelected();
+        $arrParameters['TITLE'] = Translation::get('Instance', null, 'Chamilo\Core\Repository\Integration\Chamilo\Core\Menu');
         
         if ($this->getItem()->show_icon())
         {
             $integrationNamespace = 'Chamilo\Core\Repository\Integration\Chamilo\Core\Menu';
-            $imagePath = Theme::getInstance()->getImagePath(
+            $arrParameters['IMAGE'] = Theme::getInstance()->getImagePath(
                 $integrationNamespace, 
-                'RepositoryImplementationCategory' . ($selected ? 'Selected' : ''));
-            
-            $html[] = '<img class="chamilo-menu-item-icon' .
-                 ($this->getItem()->show_title() ? ' chamilo-menu-item-image-with-label' : '') . '" src="' . $imagePath .
-                 '" title="' . $title . '" alt="' . $title . '" />';
+                'RepositoryImplementationCategory' . ($this->isSelected() ? 'Selected' : ''));
         }
-        
+
         if ($this->getItem()->show_title())
         {
-            $html[] = '<div class="chamilo-menu-item-label' .
-                 ($this->getItem()->show_icon() ? ' chamilo-menu-item-label-with-image' : '') . '">' . $title . '</div>';
+            $arrParameters['LABEL'] = $this->getItem()->show_icon();
         }
-        
-        $html[] = '<div class="clearfix"></div>';
-        $html[] = '</a>';
-        $html[] = implode(PHP_EOL, $sub_html);
-        $html[] = '</li>';
-        
-        return implode(PHP_EOL, $html);
+
+        $arrParameters['REPOSITORYSUBMENU'] = implode(PHP_EOL, $sub_html);
+
+        $template = $this->getTwig()->load('Chamilo\Core\Menu:RepositoryImplementationCategoryItem.html.twig');
+        return $template->renderBlock('RepositoryImplementationCategoryItem', $arrParameters);
     }
 
     /**

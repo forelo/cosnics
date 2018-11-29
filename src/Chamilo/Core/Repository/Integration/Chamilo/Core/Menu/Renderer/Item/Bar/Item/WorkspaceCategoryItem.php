@@ -43,8 +43,9 @@ class WorkspaceCategoryItem extends CategoryItem
             return '';
         }
         
-        $html = array();
         $sub_html = array();
+
+        $arrParameters = array();
         
         $workspaceService = new WorkspaceService(new WorkspaceRepository());
         $entityService = new EntityService();
@@ -76,40 +77,26 @@ class WorkspaceCategoryItem extends CategoryItem
         
         $sub_html[] = '</ul>';
         
-        $selected = $this->isSelected();
-        
-        $html[] = '<li class="dropdown' . ($selected ? ' active' : '') . '">';
-        $html[] = '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
-        
-        $title = Translation::get('Workspaces');
-        
+        $arrParameters['SELECTED'] = $this->isItemSelected();
+        $arrParameters['TITLE'] = Translation::get('Workspaces');
+
         if ($this->getItem()->show_icon())
         {
             $integrationNamespace = 'Chamilo\Core\Repository\Integration\Chamilo\Core\Menu';
-            $imagePath = Theme::getInstance()->getImagePath(
-                $integrationNamespace, 
-                'WorkspaceCategory' . ($selected ? 'Selected' : ''));
-            
-            $html[] = '<img class="chamilo-menu-item-icon' .
-                 ($this->getItem()->show_title() ? ' chamilo-menu-item-image-with-label' : '') . '
-                " src="' . $imagePath . '" title="' . $title .
-                 '" alt="' . $title . '" />';
+            $arrParameters['IMAGE'] = Theme::getInstance()->getImagePath(
+                $integrationNamespace,
+                'WorkspaceCategory' . ($this->isSelected() ? 'Selected' : ''));
         }
-        
+
         if ($this->getItem()->show_title())
         {
-            $html[] = '<div class="chamilo-menu-item-label' .
-                 ($this->getItem()->show_icon() ? ' chamilo-menu-item-label-with-image' : '') . '">' . $title . '</div>';
+            $arrParameters['LABEL'] = $this->getItem()->show_icon();
         }
-        
-        $html[] = '<div class="clearfix"></div>';
-        $html[] = '</a>';
-        
-        $html[] = implode(PHP_EOL, $sub_html);
-        
-        $html[] = '</li>';
-        
-        return implode(PHP_EOL, $html);
+
+        $arrParameters['WORKSPACESUBMENU'] = implode(PHP_EOL, $sub_html);
+
+        $template = $this->getTwig()->load('Chamilo\Core\Menu:WorkspaceCategoryItem.html.twig');
+        return $template->renderBlock('WorkspaceCategoryItem', $arrParameters);
     }
 
     /**
