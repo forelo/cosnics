@@ -4,8 +4,8 @@
 body {
 	/*font-family: arial, verdana, helvetica, sans-serif;*/
 	color: #3f4045;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	background-color: white;
 }
 
@@ -15,9 +15,9 @@ body {
 }
 
 .container-breadcrumb ol.breadcrumb {
-	margin-bottom: 0px;
-	padding-left: 0px;
-	padding-right: 0px;
+	margin-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 /*****************************************************
@@ -29,6 +29,9 @@ footer.chamilo-footer {
 	font-size: 90%;
 	text-align: right;
 	border-top: 1px solid #dddddd;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 /*****************************************************
@@ -56,7 +59,6 @@ footer.chamilo-footer {
 	background-position: 10px 50%;
 	/* 	padding: 10px 36px 10px 36px; */
 	text-align: justify;
-	position: relative;
 }
 
 .notification_mini {

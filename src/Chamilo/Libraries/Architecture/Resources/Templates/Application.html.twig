@@ -4,11 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ BASE_LANGUAGECODE|raw }}" lang="{{ BASE_LANGUAGECODE|raw }}">
 <head>{{ BASE_HEADERS|raw }}</head>
 <body dir="{{ BASE_TEXT_DIRECTION|raw }}">
-<div>
+<div style="position:absolute;">
 {{ BASE_BANNER|raw }}
 </div>
-<div class="{{ BASE_VIEWMODECLASS|raw }}" style="margin-left: 100px;">
-    {# ToDo: Breadcrumb #}
+<div class="{{ BASE_VIEWMODECLASS|raw }}" style="position: relative; margin-left: 100px;">
     {{ BREADCRUMB|raw }}
     {% if APP_FULLPAGE %}
     <div class="row">

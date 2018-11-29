@@ -135,7 +135,7 @@
 .navbar-chamilo .navbar-nav .dropdown-menu li, .navbar-chamilo .navbar-nav .dropdown-menu li a,
 	.navbar-chamilo .navbar-nav .dropdown-menu li a:hover {
 	/*background-color: #262f52;*/
-	background: #406e8e;
+	background: #1c8e16;
 	height: auto;
 }
 
@@ -280,9 +280,9 @@
 	background-color: #406e8e;
 	clear: both;
 	white-space: normal;
-	position: fixed;
-	right: 0;
-	top: 78px;
+	position: relative;
+	left: 335px;
+	top: -100px;
 	padding: 16px;
 	color: #8eadd8;
 	-webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
