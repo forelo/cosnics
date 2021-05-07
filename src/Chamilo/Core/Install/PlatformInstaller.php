@@ -179,7 +179,7 @@ class PlatformInstaller
             return;
         }
 
-        $this->clearAndGenerateCaches();
+        //$this->clearAndGenerateCaches();
 
 
         echo $this->installerObserver->afterInstallation();
