@@ -14,7 +14,7 @@ use Chamilo\Libraries\Storage\FilterParameters\FilterParameters;
  *
  * @author Sven Vanpoucke - Hogeschool Gent
  */
-class ContentObjectPlagiarismResultService
+class PlagiarismResultService
 {
     /**
      * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Storage\Repository\ContentObjectPlagiarismResultRepository

@@ -10,7 +10,7 @@ namespace Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Table;
 class PlagiarismResultTableParameters
 {
     /**
-     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
      */
     protected $contentObjectPlagiarismResultService;
 
@@ -22,11 +22,11 @@ class PlagiarismResultTableParameters
     /**
      * PlagiarismResultTableParameters constructor.
      *
-     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService
+     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService $contentObjectPlagiarismResultService
      * @param \Chamilo\Application\Weblcms\Course\Storage\DataClass\Course $course
      */
     public function __construct(
-        \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService,
+        \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService $contentObjectPlagiarismResultService,
         \Chamilo\Application\Weblcms\Course\Storage\DataClass\Course $course
     )
     {
@@ -35,10 +35,10 @@ class PlagiarismResultTableParameters
     }
 
     /**
-     * @return \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+     * @return \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
      */
     public function getContentObjectPlagiarismResultService(
-    ): \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+    ): \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
     {
         return $this->contentObjectPlagiarismResultService;
     }

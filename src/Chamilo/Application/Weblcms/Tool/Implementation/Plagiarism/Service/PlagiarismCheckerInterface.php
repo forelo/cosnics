@@ -16,7 +16,7 @@ use Chamilo\Core\User\Storage\DataClass\User;
  *
  * @author Sven Vanpoucke - Hogeschool Gent
  */
-class ContentObjectPlagiarismChecker
+class PlagiarismCheckerInterface
 {
     /**
      * @var \Chamilo\Application\Plagiarism\Service\Turnitin\PlagiarismChecker
@@ -24,7 +24,7 @@ class ContentObjectPlagiarismChecker
     protected $plagiarismChecker;
 
     /**
-     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
      */
     protected $contentObjectPlagiarismResultService;
 
@@ -42,13 +42,13 @@ class ContentObjectPlagiarismChecker
      * ContentObjectPlagiarismChecker constructor.
      *
      * @param \Chamilo\Application\Plagiarism\Service\PlagiarismCheckerInterface $plagiarismChecker
-     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService
+     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService $contentObjectPlagiarismResultService
      * @param \Chamilo\Core\User\Service\UserService $userService
      * @param \Chamilo\Core\Repository\Workspace\Repository\ContentObjectRepository $contentObjectRepository
      */
     public function __construct(
         \Chamilo\Application\Plagiarism\Service\PlagiarismCheckerInterface $plagiarismChecker,
-        ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService,
+        PlagiarismResultService $contentObjectPlagiarismResultService,
         \Chamilo\Core\User\Service\UserService $userService, ContentObjectRepository $contentObjectRepository
     )
     {

@@ -79,7 +79,7 @@ class PlagiarismResultTableDataProvider extends RecordTableDataProvider
     }
 
     /**
-     * @return \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+     * @return \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
      */
     protected function getPlagiarismResultService()
     {

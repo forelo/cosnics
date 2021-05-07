@@ -13,17 +13,17 @@ use Chamilo\Application\Plagiarism\Service\Events\PlagiarismEventListenerInterfa
 class PlagiarismEventListener implements PlagiarismEventListenerInterface
 {
     /**
-     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService
+     * @var \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService
      */
     protected $contentObjectPlagiarismResultService;
 
     /**
      * PlagiarismEventListener constructor.
      *
-     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService
+     * @param \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService $contentObjectPlagiarismResultService
      */
     public function __construct(
-        \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService $contentObjectPlagiarismResultService
+        \Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService $contentObjectPlagiarismResultService
     )
     {
         $this->contentObjectPlagiarismResultService = $contentObjectPlagiarismResultService;

@@ -1,8 +1,8 @@
 <?php
 namespace Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism;
 
-use Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismChecker;
-use Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\ContentObjectPlagiarismResultService;
+use Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismCheckerInterface;
+use Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism\Service\PlagiarismResultService;
 
 /**
  * @package Chamilo\Application\Weblcms\Tool\Implementation\Plagiarism
@@ -21,18 +21,18 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager
     const DEFAULT_ACTION = self::ACTION_BROWSE;
 
     /**
-     * @return ContentObjectPlagiarismResultService
+     * @return PlagiarismResultService
      */
     protected function getContentObjectPlagiarismResultService()
     {
-        return $this->getService(ContentObjectPlagiarismResultService::class);
+        return $this->getService(PlagiarismResultService::class);
     }
 
     /**
-     * @return ContentObjectPlagiarismChecker
+     * @return PlagiarismCheckerInterface
      */
     protected function getContentObjectPlagiarismChecker()
     {
-        return $this->getService(ContentObjectPlagiarismChecker::class);
+        return $this->getService(PlagiarismCheckerInterface::class);
     }
 }
