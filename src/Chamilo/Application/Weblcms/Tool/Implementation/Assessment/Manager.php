@@ -1,4 +1,5 @@
 <?php
+
 namespace Chamilo\Application\Weblcms\Tool\Implementation\Assessment;
 
 use Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt;
@@ -43,6 +44,7 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
     const ACTION_RAW_EXPORT_RESULTS = 'RawExportResults';
     const ACTION_DELETE_RESULTS = 'ResultsDeleter';
     const ACTION_TAKE_ASSESSMENT = 'ComplexDisplay';
+    const ACTION_RENDER_CERTIFICATE = 'RenderCertificate';
     const PARAM_USER_ASSESSMENT = 'uaid';
     const PARAM_QUESTION_ATTEMPT = 'qaid';
     const PARAM_ASSESSMENT = 'aid';
@@ -75,15 +77,13 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
         $allowed = $this->is_allowed(WeblcmsRights::EDIT_RIGHT);
         $publication_id = $publication[ContentObjectPublication::PROPERTY_ID];
 
-        if ($publication[ContentObject::PROPERTY_TYPE] == Assessment::class_name())
-        {
+        if ($publication[ContentObject::PROPERTY_TYPE] == Assessment::class_name()) {
             $complex_display_item = $buttonGroup->getButtons()[0];
             $complex_display_item->setImagePath(new FontAwesomeGlyph('arrow-circle-right'));
             $complex_display_item->setLabel(Translation::get('Take'));
         }
 
-        if ($publication[ContentObject::PROPERTY_TYPE] == Hotpotatoes::class_name())
-        {
+        if ($publication[ContentObject::PROPERTY_TYPE] == Hotpotatoes::class_name()) {
             $buttonGroup->insertButton(
                 new Button(
                     Translation::get('Take'),
@@ -96,12 +96,10 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
             );
         }
 
-        if ($allowed)
-        {
+        if ($allowed) {
             // Remove 'DisplayComplex' button (index 0) from button bar if the 'Preview' button is present.
             // Since buttons don't contain identifiers, we're comparing the translation of the labels.
-            if ($buttonGroup->getButtons()[2]->getLabel() ==Translation::get('Preview', null, Utilities::COMMON_LIBRARIES))
-            {
+            if ($buttonGroup->getButtons()[2]->getLabel() == Translation::get('Preview', null, Utilities::COMMON_LIBRARIES)) {
                 $buttonGroup->removeButton(0);
             }
 
@@ -139,15 +137,13 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
     {
         $publication_id = $publication[ContentObjectPublication::PROPERTY_ID];
 
-        if ($publication[ContentObject::PROPERTY_TYPE] == Assessment::class_name())
-        {
+        if ($publication[ContentObject::PROPERTY_TYPE] == Assessment::class_name()) {
             $complex_display_item = $toolbar->get_item(1);
             $complex_display_item->set_image(Theme::getInstance()->getCommonImagePath('Action/Next'));
             $complex_display_item->set_label(Translation::get('Take'));
         }
 
-        if ($publication[ContentObject::PROPERTY_TYPE] == Hotpotatoes::class_name())
-        {
+        if ($publication[ContentObject::PROPERTY_TYPE] == Hotpotatoes::class_name()) {
             $toolbar->insert_item(
                 new ToolbarItem(
                     Translation::get('Take'),
@@ -169,7 +165,7 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
     }
 
     public function addContentObjectPublicationButtons($publication, ButtonGroup $buttonGroup,
-        DropdownButton $dropdownButton)
+                                                       DropdownButton $dropdownButton)
     {
         $publication_id = $publication[ContentObjectPublication::PROPERTY_ID];
 
@@ -197,8 +193,7 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
 
     public function is_content_object_attempt_possible($publication)
     {
-        if (! array_key_exists($publication->get_id(), self::$checked_publications))
-        {
+        if (!array_key_exists($publication->get_id(), self::$checked_publications)) {
             $assessment = $publication->get_content_object();
             $track = new \Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt();
             $condition_t = new EqualityCondition(
@@ -219,18 +214,16 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
 
             $count = count($trackers);
 
-            foreach ($trackers as $tracker)
-            {
-                if ($tracker->get_status() == AssessmentAttempt::STATUS_NOT_COMPLETED)
-                {
+            foreach ($trackers as $tracker) {
+                if ($tracker->get_status() == AssessmentAttempt::STATUS_NOT_COMPLETED) {
                     $this->active_tracker = $tracker;
-                    $count --;
+                    $count--;
                     break;
                 }
             }
 
             self::$checked_publications[$publication->get_id()] = ($assessment->get_maximum_attempts() == 0 ||
-                 $count < $assessment->get_maximum_attempts());
+                $count < $assessment->get_maximum_attempts());
         }
 
         return self::$checked_publications[$publication->get_id()];

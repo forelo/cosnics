@@ -65,5 +65,8 @@ class AssessmentAttemptTableColumnModel extends RecordTableColumnModel implement
         
         $this->add_column(
             new DataClassPropertyTableColumn(AssessmentAttempt::class_name(), AssessmentAttempt::PROPERTY_STATUS));
+
+        $this->add_column(
+            new DataClassPropertyTableColumn(AssessmentAttempt::class_name(), 'validated'));
     }
 }
