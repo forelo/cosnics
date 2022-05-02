@@ -51,7 +51,11 @@ class RenderCertificateComponent extends Manager
         $properties['name'] = $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_FIRSTNAME] . ' ' . $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_LASTNAME];
         $properties['company'] = $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_OFFICIAL_CODE];
         $properties['score'] = $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_TOTAL_SCORE];
-        $properties['valid'] = $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_END_TIME];
+        $date = strtolower(
+            gmdate("l j F Y", $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_END_TIME])
+        );
+        $properties['valid'] = $date;
+        $properties['valid2'] = (int)(substr($date, strlen($date) - 4, 4)) + 1;
 
         return $this->getTwig()->render(
             'Chamilo\Application\Forelo:ForeloCertificate.html.twig', $properties);
