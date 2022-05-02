@@ -9,6 +9,7 @@ use Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Component\Attempt
 use Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Manager;
 use Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Storage\DataClass\Publication;
 use Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Storage\DataManager;
+use Chamilo\Core\Repository\ContentObject\Assessment\Display\Attempt\AbstractAttempt;
 use Chamilo\Core\Repository\ContentObject\Hotpotatoes\Storage\DataClass\Hotpotatoes;
 use Chamilo\Libraries\Format\Structure\Toolbar;
 use Chamilo\Libraries\Format\Structure\ToolbarItem;
@@ -127,6 +128,20 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
         if ($assessment->get_type() != Hotpotatoes::class_name() && (($assessment_attempt_status ==
                     AssessmentAttempt::STATUS_COMPLETED && $assessment_publication->get_configuration()->show_feedback()) ||
                 $this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT))) {
+            if ($assessment_attempt_status == AbstractAttempt::STATUS_COMPLETED) {
+                $toolbar->add_item(
+                    new ToolbarItem(
+                        Translation::get('Generate certificate'),
+                        Theme::getInstance()->getCommonImagePath('Place/Competences'),
+                        $this->get_component()->get_url(
+                            [
+                                \Chamilo\Application\Weblcms\Tool\Manager::PARAM_ACTION => Manager::ACTION_RENDER_CERTIFICATE,
+                                Manager::PARAM_USER_ASSESSMENT => $assessment_attempt_id,
+                                Manager::PARAM_ASSESSMENT => $assessment->get_id()
+                            ]
+                        ),
+                        ToolbarItem::DISPLAY_ICON));
+            }
             $toolbar->add_item(
                 new ToolbarItem(
                     Translation::get('ViewResults'),
@@ -136,17 +151,6 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
                             \Chamilo\Application\Weblcms\Tool\Manager::PARAM_ACTION => Manager::ACTION_ATTEMPT_RESULT_VIEWER,
                             Manager::PARAM_USER_ASSESSMENT => $assessment_attempt_id,
                             AttemptResultViewerComponent::PARAM_SHOW_FULL => 1)),
-                    ToolbarItem::DISPLAY_ICON));
-            $toolbar->add_item(
-                new ToolbarItem(
-                    Translation::get('Generate certificate'),
-                    Theme::getInstance()->getCommonImagePath('Action/Statistics'),
-                    $this->get_component()->get_url(
-                        [
-                            \Chamilo\Application\Weblcms\Tool\Manager::PARAM_ACTION => Manager::ACTION_RENDER_CERTIFICATE,
-                            Manager::PARAM_USER_ASSESSMENT => $assessment_attempt_id
-                        ]
-                    ),
                     ToolbarItem::DISPLAY_ICON));
         } else {
             $toolbar->add_item(

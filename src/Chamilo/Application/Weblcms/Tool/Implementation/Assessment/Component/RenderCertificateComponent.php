@@ -2,12 +2,16 @@
 
 namespace Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Component;
 
-use Chamilo\Application\Weblcms\Integration\Chamilo\Core\Reporting\Block\Assessment\AssessmentAttemptsUserBlock;
 use Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt;
 use Chamilo\Application\Weblcms\Tool\Implementation\Assessment\Manager;
+use Chamilo\Core\Repository\ContentObject\Assessment\Display\Attempt\AbstractAttempt;
+use Chamilo\Core\Repository\ContentObject\Assessment\Storage\DataClass\Assessment;
+use Chamilo\Core\Repository\Storage\DataClass\ContentObject;
+use Chamilo\Core\User\Storage\DataClass\User;
 use Chamilo\Libraries\Architecture\Application\ApplicationConfigurationInterface;
 use Chamilo\Libraries\Architecture\Exceptions\NotAllowedException;
 use Chamilo\Libraries\Platform\Session\Request;
+use Chamilo\Libraries\Storage\DataClass\DataClass;
 use Chamilo\Libraries\Storage\DataManager\DataManager;
 use Chamilo\Libraries\Storage\Parameters\DataClassRetrieveParameters;
 use Chamilo\Libraries\Storage\Query\Condition\EqualityCondition;
@@ -36,28 +40,62 @@ class RenderCertificateComponent extends Manager
     {
         // Assesment properties
         $uaid = Request::get(self::PARAM_USER_ASSESSMENT);
+        $aid = Request::get(self::PARAM_ASSESSMENT);
 
-        $condition = new EqualityCondition(
-            new PropertyConditionVariable(
-                \Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt::class_name(),
-                \Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt::PROPERTY_ID),
-            new StaticConditionVariable($uaid));
-
-        $item = DataManager::retrieve(
-            \Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking\Storage\DataClass\AssessmentAttempt::class_name(),
-            new DataClassRetrieveParameters($condition));
-
-        if ($item)
-        {
-            var_dump($item);
-        }
+        $assessmentAttemptInfo = $this->getAssessementAttempt($uaid);
+        $assessmentInfo = $this->getAssessement($aid);
+        $userProperties = $this->getUserInfo($assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_USER_ID]);
 
         // User properties
-        $properties['name'] = '';
-        $properties['company'] = '';
-        $properties['score'] = '';
+        $properties['title'] = $assessmentInfo[DataClass::PROPERTIES_DEFAULT][Assessment::PROPERTY_TITLE];
+        $properties['name'] = $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_FIRSTNAME] . ' ' . $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_LASTNAME];
+        $properties['company'] = $userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_OFFICIAL_CODE];
+        $properties['score'] = $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_TOTAL_SCORE];
+        $properties['valid'] = $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_END_TIME];
 
         return $this->getTwig()->render(
             'Chamilo\Application\Forelo:ForeloCertificate.html.twig', $properties);
+    }
+
+    private function getAssessement(int $aid): array
+    {
+        $conditionItem = new EqualityCondition(
+            new PropertyConditionVariable(
+                ContentObject::class_name(),
+                DataClass::PROPERTY_ID),
+            new StaticConditionVariable($aid));
+        $item = DataManager::retrieve(
+            ContentObject::class_name(),
+            new DataClassRetrieveParameters($conditionItem));
+
+        return $item->get_properties();
+    }
+
+    private function getAssessementAttempt(int $uaid): array
+    {
+        $conditionItem = new EqualityCondition(
+            new PropertyConditionVariable(
+                AssessmentAttempt::class_name(),
+                AssessmentAttempt::PROPERTY_ID),
+            new StaticConditionVariable($uaid));
+        $item = DataManager::retrieve(
+            AssessmentAttempt::class_name(),
+            new DataClassRetrieveParameters($conditionItem));
+
+        return $item->get_properties();
+    }
+
+    private function getUserInfo(int $userId): array
+    {
+        $conditionUser = new EqualityCondition(
+            new PropertyConditionVariable(
+                User::class_name(),
+                User::PROPERTY_ID),
+            new StaticConditionVariable($userId));
+        $user = DataManager::retrieve(
+            User::class_name(),
+            new DataClassRetrieveParameters($conditionUser));
+
+        return $user->get_properties();
     }
 }
