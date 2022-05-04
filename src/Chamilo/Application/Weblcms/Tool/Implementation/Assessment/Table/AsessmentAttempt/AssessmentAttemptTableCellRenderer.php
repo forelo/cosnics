@@ -122,6 +122,7 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
         $assessment_attempt_status = $assessment_attempt[AssessmentAttempt::PROPERTY_STATUS];
         $assessment_attempt_id = $assessment_attempt[AssessmentAttempt::PROPERTY_ID];
         $assessment_attempt_validated = $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED];
+        $assessment_attempt_score = $assessment_attempt[AssessmentAttempt::PROPERTY_TOTAL_SCORE];
 
         $assessment = $pub->get_content_object();
 
@@ -138,7 +139,8 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
                 $this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT))) {
             if (
                 ($assessment_attempt_status == AbstractAttempt::STATUS_COMPLETED) &&
-                ($assessment_attempt_validated == AssessmentAttempt::STATUS_COMPLETED)
+                ($assessment_attempt_validated == AssessmentAttempt::STATUS_COMPLETED) &&
+                ($assessment_attempt_score >= AssessmentAttempt::STATUS_CERTIFICATE_MINIMUM_SCORE)
             ) {
                 $toolbar->add_item(
                     new ToolbarItem(

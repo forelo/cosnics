@@ -26,6 +26,7 @@ abstract class AbstractAttempt extends DataClass
     // Status
     const STATUS_NOT_COMPLETED = 1;
     const STATUS_COMPLETED = 2;
+    const STATUS_CERTIFICATE_MINIMUM_SCORE = 50;
 
     /**
      *
