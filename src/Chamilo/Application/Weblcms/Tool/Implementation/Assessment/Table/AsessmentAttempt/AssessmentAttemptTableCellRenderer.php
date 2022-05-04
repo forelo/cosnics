@@ -89,8 +89,15 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
                                 'NotCompleted',
                                 null,
                                 'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
-                        case 'validated' :
-                            return 'switch';
+                        case AssessmentAttempt::PROPERTY_VALIDATED :
+                            return $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] ==
+                            AssessmentAttempt::STATUS_COMPLETED ? Translation::get(
+                                'Yes',
+                                null,
+                                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking') : Translation::get(
+                                'No',
+                                null,
+                                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
                     }
                 }
             }
@@ -114,6 +121,7 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
 
         $assessment_attempt_status = $assessment_attempt[AssessmentAttempt::PROPERTY_STATUS];
         $assessment_attempt_id = $assessment_attempt[AssessmentAttempt::PROPERTY_ID];
+        $assessment_attempt_validated = $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED];
 
         $assessment = $pub->get_content_object();
 
@@ -128,7 +136,10 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
         if ($assessment->get_type() != Hotpotatoes::class_name() && (($assessment_attempt_status ==
                     AssessmentAttempt::STATUS_COMPLETED && $assessment_publication->get_configuration()->show_feedback()) ||
                 $this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT))) {
-            if ($assessment_attempt_status == AbstractAttempt::STATUS_COMPLETED) {
+            if (
+                ($assessment_attempt_status == AbstractAttempt::STATUS_COMPLETED) &&
+                ($assessment_attempt_validated == AssessmentAttempt::STATUS_COMPLETED)
+            ) {
                 $toolbar->add_item(
                     new ToolbarItem(
                         Translation::get('Generate certificate'),

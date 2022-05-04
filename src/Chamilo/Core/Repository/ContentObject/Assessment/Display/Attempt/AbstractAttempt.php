@@ -1,4 +1,5 @@
 <?php
+
 namespace Chamilo\Core\Repository\ContentObject\Assessment\Display\Attempt;
 
 use Chamilo\Libraries\Translation\Translation;
@@ -20,7 +21,8 @@ abstract class AbstractAttempt extends DataClass
     const PROPERTY_START_TIME = 'start_time';
     const PROPERTY_END_TIME = 'end_time';
     const PROPERTY_TOTAL_TIME = 'total_time';
-    
+    const PROPERTY_VALIDATED = 'validated';
+
     // Status
     const STATUS_NOT_COMPLETED = 1;
     const STATUS_COMPLETED = 2;
@@ -38,6 +40,7 @@ abstract class AbstractAttempt extends DataClass
         $extended_property_names[] = self::PROPERTY_START_TIME;
         $extended_property_names[] = self::PROPERTY_END_TIME;
         $extended_property_names[] = self::PROPERTY_TOTAL_TIME;
+        $extended_property_names[] = self::PROPERTY_VALIDATED;
         return parent::get_default_property_names($extended_property_names);
     }
 
@@ -151,12 +154,30 @@ abstract class AbstractAttempt extends DataClass
 
     /**
      * Returns the status as a string
-     * 
+     *
      * @return string
      */
     public function get_status_as_string()
     {
         return $this->get_status() == self::STATUS_COMPLETED ? Translation::get('Completed') : Translation::get(
             'NotCompleted');
+    }
+
+    /**
+     *
+     * @return int
+     */
+    public function get_validated()
+    {
+        return $this->get_default_property(self::PROPERTY_VALIDATED);
+    }
+
+    /**
+     *
+     * @param $validated
+     */
+    public function set_validated($validated)
+    {
+        $this->set_default_property(self::PROPERTY_VALIDATED, $validated);
     }
 }
