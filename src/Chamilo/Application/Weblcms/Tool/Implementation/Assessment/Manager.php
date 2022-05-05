@@ -51,6 +51,7 @@ abstract class Manager extends \Chamilo\Application\Weblcms\Tool\Manager impleme
     const PARAM_ANONYMOUS = 'anonymous';
     const PARAM_INVITATION_ID = 'invitation_id';
     const PARAM_PUBLICATION_ACTION = 'publication_action';
+    const PARAM_VALIDATED = 'vlid';
 
     public static function get_allowed_types()
     {

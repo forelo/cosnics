@@ -90,20 +90,45 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
                                 null,
                                 'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
                         case AssessmentAttempt::PROPERTY_VALIDATED :
-                            return $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] ==
-                            AssessmentAttempt::STATUS_COMPLETED ? Translation::get(
-                                'Yes',
-                                null,
-                                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking') : Translation::get(
-                                'No',
-                                null,
-                                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
+                            return $this->get_certificate_completion_status($assessment_attempt);
                     }
                 }
             }
         }
 
         return parent::render_cell($column, $assessment_attempt);
+    }
+
+    private function get_certificate_completion_status($assessment_attempt): string
+    {
+        $translation = $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] == AssessmentAttempt::STATUS_COMPLETED ?
+            Translation::get(
+                'Yes',
+                null,
+                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking')
+            :
+            Translation::get(
+                'No',
+                null,
+                'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
+
+        // url
+        $url = $this->get_component()->get_url(
+            [
+                \Chamilo\Application\Weblcms\Tool\Manager::PARAM_ACTION => Manager::ACTION_VIEW_RESULTS,
+                Manager::PARAM_USER_ASSESSMENT => $assessment_attempt[AssessmentAttempt::PROPERTY_ID],
+                Manager::PARAM_ASSESSMENT => $assessment_attempt[AssessmentAttempt::PROPERTY_ASSESSMENT_ID],
+                Manager::PARAM_VALIDATED =>
+                    ($assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] <> AssessmentAttempt::STATUS_COMPLETED) ?
+                        AssessmentAttempt::STATUS_COMPLETED : AssessmentAttempt::STATUS_NOT_COMPLETED
+            ]
+        );
+
+        // link
+        $button = '<a href="' . $url . '">';
+        $button .= $translation;
+        $button .= '</a>';
+        return $button;
     }
 
     /**
