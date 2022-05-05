@@ -179,7 +179,7 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
                                 Manager::PARAM_ASSESSMENT => $assessment->get_id()
                             ]
                         ),
-                        ToolbarItem::DISPLAY_ICON));
+                        ToolbarItem::DISPLAY_ICON, false, null, '_blank'));
             }
             $toolbar->add_item(
                 new ToolbarItem(
