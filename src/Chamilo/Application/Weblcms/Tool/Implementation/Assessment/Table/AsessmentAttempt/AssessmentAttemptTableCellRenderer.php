@@ -125,10 +125,11 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
         );
 
         // link
-        $button = '<a href="' . $url . '">';
-        $button .= $translation;
-        $button .= '</a>';
-        return $button;
+        $link = '<a href="' . $url . '">';
+        $link .= $translation;
+        $link .= '</a>';
+
+        return ($this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT)) ? $link : $translation;
     }
 
     /**
