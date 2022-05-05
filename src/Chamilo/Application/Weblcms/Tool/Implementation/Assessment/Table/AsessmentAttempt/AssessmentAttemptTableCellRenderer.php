@@ -103,12 +103,12 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
     {
         $translation = $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] == AssessmentAttempt::STATUS_COMPLETED ?
             Translation::get(
-                'Yes',
+                'Validated',
                 null,
                 'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking')
             :
             Translation::get(
-                'No',
+                'NotValidated',
                 null,
                 'Chamilo\Application\Weblcms\Integration\Chamilo\Core\Tracking');
 
