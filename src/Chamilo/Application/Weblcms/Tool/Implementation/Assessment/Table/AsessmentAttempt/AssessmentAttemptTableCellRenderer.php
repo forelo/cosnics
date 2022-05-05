@@ -124,12 +124,34 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
             ]
         );
 
+        if ($this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT)) {
+            /**
+             * Button
+             */
+            $toolbar = new Toolbar();
+            $toolbar->add_item(
+                new ToolbarItem(
+                    $translation,
+                    $assessment_attempt[AssessmentAttempt::PROPERTY_VALIDATED] == AssessmentAttempt::STATUS_COMPLETED ?
+                        Theme::getInstance()->getCommonImagePath('Action/Confirm') :
+                        Theme::getInstance()->getCommonImagePath('Action/Delete'),
+                    $url,
+                    ToolbarItem::DISPLAY_ICON)
+            );
+
+            return $toolbar->as_html();
+        } else {
+            return $translation;
+        }
+
+        /*
         // link
         $link = '<a href="' . $url . '">';
         $link .= $translation;
         $link .= '</a>';
 
         return ($this->get_component()->is_allowed(WeblcmsRights::EDIT_RIGHT)) ? $link : $translation;
+        */
     }
 
     /**
@@ -170,7 +192,7 @@ class AssessmentAttemptTableCellRenderer extends RecordTableCellRenderer impleme
             ) {
                 $toolbar->add_item(
                     new ToolbarItem(
-                        Translation::get('Generate certificate'),
+                        Translation::get('GenerateCertificate'),
                         Theme::getInstance()->getCommonImagePath('Place/Competences'),
                         $this->get_component()->get_url(
                             [
