@@ -127,5 +127,31 @@
                 </options>
             </setting>
         </category>
+        <category name="certificate">
+            <setting
+                    name="certificate_name"
+                    field="text"
+                    default="{{name}}" />
+            <setting
+                    name="certificate_company"
+                    field="text"
+                    default="{{company}}" />
+            <setting
+                    name="certificate_title"
+                    field="text"
+                    default="{{title}}" />
+            <setting
+                    name="certificate_valid"
+                    field="text"
+                    default="{{valid}}" />
+            <setting
+                    name="certificate_validtill"
+                    field="text"
+                    default="{{validtill}}" />
+            <setting
+                    name="certificate_template"
+                    field="html_editor"
+                    default="" />
+        </category>
     </settings>
 </package>

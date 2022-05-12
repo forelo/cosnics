@@ -702,3 +702,5 @@ NotificationFilterTool = "Hide all notifications for the <b>{TOOL}</b> tool in t
 SortName = "Sort name"
 Others = "Others"
 CoursesClosedWarning = "Some courses have a lock symbol in front of them and are not accessible. This means that the teacher of the course has not yet opened the course for the students. Please contact the teacher of the course for more information."
+Certificate = "Certificate"
+CertificateTemplate = "Certificate template"
