@@ -31,12 +31,12 @@ class EmailerComponent extends Manager
         }
 
         if (count($ids) > 0) {
-            $failures = 0;
-
-            foreach ($ids as $id) {
-                $users[] = \Chamilo\Core\User\Storage\DataManager::retrieve_by_id(
-                    \Chamilo\Core\User\Storage\DataClass\User::class_name(),
-                    (int)$id);
+            if ($this->get_user()->is_platform_admin()) {
+                foreach ($ids as $id) {
+                    $users[] = \Chamilo\Core\User\Storage\DataManager::retrieve_by_id(
+                        \Chamilo\Core\User\Storage\DataClass\User::class_name(),
+                        (int)$id);
+                }
             }
 
             $application = $this->getApplicationFactory()->getApplication(
