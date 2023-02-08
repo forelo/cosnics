@@ -43,5 +43,11 @@
         return '';
     };
 
+    // extra font
+    CKEDITOR.config.font_names =
+        'Calibri;' +
+        'Calibri Italic;' +
+        CKEDITOR.config.font_names;
+
 })();
 

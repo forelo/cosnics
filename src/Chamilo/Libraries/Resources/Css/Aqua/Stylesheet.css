@@ -1,5 +1,20 @@
 @import url('../../Javascript/Plugin/Uploadify/uploadify.css');
 
+@font-face {
+    font-family: 'Calibri';
+    src: local("Calibri"),
+    url("/../../../../../Chamilo/Libraries/Resources/Css/Aqua/fonts/Calibri.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Calibri Italic';
+    src: local("Calibri"),
+    url("/../../../../../Chamilo/Libraries/Resources/Css/Aqua/fonts/Calibri-Italic.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
 figcaption {
     padding-top: 8px !important;
 }
