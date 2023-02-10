@@ -9,7 +9,7 @@ $(function ()
 		
 		var translation = getTranslation(href, 'admin');
 		
-		var link = $('a', $('li:last', $('#breadcrumbtrail')));
+		var link = $('a', $('li:last', $('.breadcrumb')));
 		var title = $('h3', $('#main'));
 		var url = link.attr('href');
 		
