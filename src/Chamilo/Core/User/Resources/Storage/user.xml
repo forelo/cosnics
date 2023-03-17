@@ -68,7 +68,7 @@
             unsigned="1" />
         <property
             name="disk_quota"
-            type="integer"
+            type="bigint"
             unsigned="1"
             notnull="1"
             default="209715200" />
