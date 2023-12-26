@@ -10,8 +10,13 @@ use Chamilo\Core\Repository\ContentObject\GradeBook\Storage\Entity\GradeBookScor
 use Chamilo\Core\User\Service\UserService;
 use Chamilo\Core\User\Storage\DataClass\User;
 use Chamilo\Libraries\Architecture\Exceptions\NotAllowedException;
+use Chamilo\Libraries\Architecture\Exceptions\UserException;
 use Chamilo\Libraries\Format\Structure\Breadcrumb;
 use Chamilo\Libraries\Format\Structure\BreadcrumbTrail;
+use Chamilo\Libraries\Translation\Translation;
+use Chamilo\Libraries\Utilities\Utilities;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\ORMException;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializationContext;
@@ -33,7 +38,7 @@ class UserScoresComponent extends Manager
     /**
      * @return string
      *
-     * @throws \Chamilo\Libraries\Architecture\Exceptions\NotAllowedException
+     * @throws NotAllowedException
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
@@ -76,7 +81,7 @@ class UserScoresComponent extends Manager
     }
 
     /**
-     * @throws \Chamilo\Libraries\Architecture\Exceptions\NotAllowedException
+     * @throws NotAllowedException
      */
     protected function checkAccessRights()
     {
@@ -100,9 +105,25 @@ class UserScoresComponent extends Manager
         return $this->getService(UserService::class);
     }
 
+    /**
+     * @return array
+     * @throws UserException
+     * @throws ORMException
+     */
     protected function getTemplateProperties(): array
     {
-        $gradeBookData = $this->getGradeBookService()->getGradeBookData($this->getGradeBook());
+        $gradeBook = $this->getGradeBook();
+        $contextIdentifier = $this->getGradeBookServiceBridge()->getContextIdentifier();
+
+        try
+        {
+            $gradeBookData = $this->getGradeBookService()->getGradeBookDataByContextIdentifier($gradeBook, $contextIdentifier);
+        }
+        catch (NoResultException $exeption)
+        {
+            throw new UserException(Translation::get('NoResults', null, Utilities::COMMON_LIBRARIES));
+        }
+
         $gradebookItems = $this->getGradeBookServiceBridge()->findPublicationGradeBookItems();
         $this->getGradeBookService()->completeGradeBookData($gradeBookData, $gradebookItems);
 
