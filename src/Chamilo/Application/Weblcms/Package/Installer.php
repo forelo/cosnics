@@ -48,7 +48,7 @@ class Installer extends \Chamilo\Configuration\Package\Action\Installer
             return false;
         }
         
-        if (! CourseSettingsController::install_course_settings($this))
+        if (! (new \Chamilo\Application\Weblcms\CourseSettingsController)->install_course_settings($this))
         {
             return false;
         }
