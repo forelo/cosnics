@@ -78,9 +78,9 @@ class Package extends DataClass
     /**
      * Returns the context of this Package.
      *
-     * @return the context.
+     * @return mixed|string|null
      */
-    public function get_context()
+    public function get_context(): mixed
     {
         return $this->get_default_property(self::PROPERTY_CONTEXT);
     }
@@ -88,7 +88,7 @@ class Package extends DataClass
     /**
      * Sets the context of this Package.
      *
-     * @param context
+     * @param $context
      */
     public function set_context($context)
     {

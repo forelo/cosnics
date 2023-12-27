@@ -5,7 +5,6 @@ use Chamilo\Configuration\Package\PackageList;
 use Chamilo\Configuration\Package\PlatformPackageBundles;
 use Chamilo\Configuration\Package\Storage\DataClass\Package;
 use Chamilo\Core\Install\Manager;
-use Chamilo\Core\Install\ValidateDatabaseConnection;
 use Chamilo\Core\Repository\ContentObject\Hotpotatoes\Storage\DataClass\Hotpotatoes;
 use Chamilo\Libraries\Architecture\Application\Application;
 use Chamilo\Libraries\Architecture\ClassnameUtilities;
@@ -14,7 +13,7 @@ use Chamilo\Libraries\Format\Form\FormValidator;
 use Chamilo\Libraries\Format\Tabs\DynamicFormTab;
 use Chamilo\Libraries\Format\Tabs\DynamicFormTabsRenderer;
 use Chamilo\Libraries\Format\Theme;
-use Chamilo\Libraries\Hashing\HashingUtilities;
+use Chamilo\Libraries\Hashing\Type\Md5Utilities;
 use Chamilo\Libraries\Platform\Session\Session;
 use Chamilo\Libraries\Translation\Translation;
 use Chamilo\Libraries\Utilities\Utilities;
@@ -140,7 +139,7 @@ class SettingsForm extends FormValidator
         $this->addRule(
             array('database_driver', 'database_host', 'database_username', 'database_password', 'database_name'),
             Translation::get('CouldNotConnectToDatabase'),
-            new ValidateDatabaseConnection());
+            'required');
     }
 
     public function addGeneralSettings()
@@ -223,7 +222,7 @@ class SettingsForm extends FormValidator
             'select',
             'hashing_algorithm',
             Translation::get('HashingAlgorithm'),
-            HashingUtilities::get_available_types());
+            (new Md5Utilities())->get_available_types());
         $this->addElement('category');
 
         $this->addElement('category', Translation::get('Storage'));
@@ -389,8 +388,8 @@ class SettingsForm extends FormValidator
 
                 $extra = $package->get_extra();
 
-                if ($package->getCoreInstall() || $package->getDefaultInstall())
-                {
+                $defaults = [];
+                if ($package->getCoreInstall() || $package->getDefaultInstall()) {
                     $defaults['install'][$package->get_context()] = 1;
                 }
             }
