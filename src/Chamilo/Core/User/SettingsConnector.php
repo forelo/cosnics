@@ -25,8 +25,8 @@ class SettingsConnector
 
     public static function get_date_terms_and_conditions_update()
     {
-        $date_format = '%e-%m-%Y';
-        return array(\Strftime($date_format, Manager::get_date_terms_and_conditions_last_modified()));
+        $date_format = 'e-m-Y';
+        return array(\Date($date_format, (int)Manager::get_date_terms_and_conditions_last_modified()));
     }
 
     /**
