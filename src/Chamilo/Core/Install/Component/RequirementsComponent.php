@@ -139,7 +139,7 @@ class RequirementsComponent extends Manager implements NoAuthenticationSupport
             'phpversion()',
             'http://www.php.net/manual/en/function.phpversion.php',
             phpversion(),
-            '>= 5.4',
+            '>=8.2',
             null,
             Translation::get('PHPVersionInfo', null, Utilities::COMMON_LIBRARIES));
 
