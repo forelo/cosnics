@@ -171,10 +171,6 @@ class Installer extends \Chamilo\Configuration\Package\Action\Installer
         {
             return false;
         }
-        else
-        {
-            $localSetting = new LocalSetting(new LocalSettingCacheService(), $user->get_id());
-            return $localSetting->create('platform_language', 'nl', 'Chamilo\Core\Admin');
-        }
+        return true;
     }
 }
