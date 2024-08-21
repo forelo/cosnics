@@ -149,6 +149,10 @@
                     field="text"
                     default="{{validtill}}" />
             <setting
+                    name="certificate_logo"
+                    field="text"
+                    default="{{logo}}" />
+            <setting
                     name="certificate_template"
                     field="html_editor"
                     default="" />
