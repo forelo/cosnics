@@ -51,7 +51,10 @@ class RenderCertificateComponent extends Manager
                 $this->getConfigurationSetting('certificate_title') => $assessmentInfo[DataClass::PROPERTIES_DEFAULT][ContentObject::PROPERTY_TITLE],
                 $this->getConfigurationSetting('certificate_valid') => $date,
                 $this->getConfigurationSetting('certificate_validtill') => substr($date, 0, strlen($date) - 4) . ((int)(substr($date, strlen($date) - 4, 4)) + 1),
-                $this->getConfigurationSetting('certificate_logo') => strtolower($userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_OFFICIAL_CODE])
+                $this->getConfigurationSetting('certificate_logo') =>
+                    preg_replace('/\s+/', '',
+                        strtolower($userProperties[DataClass::PROPERTIES_DEFAULT][User::PROPERTY_OFFICIAL_CODE])
+                    )
             ]
         );
 
