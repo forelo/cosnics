@@ -17,6 +17,8 @@ use Chamilo\Libraries\Storage\Parameters\DataClassRetrieveParameters;
 use Chamilo\Libraries\Storage\Query\Condition\EqualityCondition;
 use Chamilo\Libraries\Storage\Query\Variable\PropertyConditionVariable;
 use Chamilo\Libraries\Storage\Query\Variable\StaticConditionVariable;
+use DateTimeZone;
+use IntlDateFormatter;
 
 class RenderCertificateComponent extends Manager
 {
@@ -40,9 +42,16 @@ class RenderCertificateComponent extends Manager
 
         $template = $this->getConfigurationSetting('certificate_template');
 
-        $date = strtolower(
-            gmdate("l j F Y", $assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_END_TIME])
+        $dateFormat = new IntlDateFormatter(
+            'nl_NL',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            new DateTimeZone('Europe/Brussels')
         );
+        // https://unicode-org.github.io/icu/userguide/format_parse/datetime/
+        $dateFormat->setPattern('d LLLL y');
+        $date = $dateFormat->format($assessmentAttemptInfo[DataClass::PROPERTIES_DEFAULT][AbstractAttempt::PROPERTY_END_TIME]);
+
         $template = $this->renderTemplate($template,
             [
                 // User properties
